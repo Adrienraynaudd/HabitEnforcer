@@ -14,23 +14,3 @@
 
     </body>
 </html>
-<?php
-    // Connexion à la base de données
-    try
-    {
-        $bdd = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
-    }
-    catch(Exception $e)
-    {
-        die('Erreur : '.$e->getMessage());
-    }
-    
-    // Récupération du pseudo
-    $req = $bdd->prepare('SELECT pseudo FROM membres WHERE id = ?');
-    $req->execute(array($_GET['id']));
-    
-    $donnees = $req->fetch();
-    
-    echo $donnees['pseudo'];
-    
-    $req->closeCursor();
