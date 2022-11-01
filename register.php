@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="style.css" />
-</head>
-<body>
 <?php
-require 'dbSetting.php';
+$user = 'root';
+$password = 'root';
+$db = 'inventory';
+$host = 'localhost';
+$port = 8889;
 
+$link = mysqli_init();
+$success = mysqli_real_connect(
+   $link,
+   $host,
+   $user,
+   $password,
+   $db,
+   $port
+);
+if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
+	exit('Please complete the registration form!');
+}
+if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email'])) {
+	exit('Please complete the registration form');
+}
+echo $_POST['username'],"\n";
+echo $_POST['password'],"\n";
+echo $_POST['email'];
 ?>
-<form class="box" action="" method="post">
-    <h1 class="box-title">S'inscrire</h1>
-  <input type="text" class="box-input" name="username" placeholder="Nom d'utilisateur" required />
-    <input type="text" class="box-input" name="email" placeholder="Email" required />
-    <input type="password" class="box-input" name="password" placeholder="Mot de passe" required />
-    <input type="submit" name="submit" value="S'inscrire" class="box-button" />
-    <p class="box-register">Déjà inscrit? <a href="login.php">Connectez-vous ici</a></p>
-</form>
-</body>
-</html>
