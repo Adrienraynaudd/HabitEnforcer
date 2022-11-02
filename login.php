@@ -5,6 +5,7 @@
 </head>
 <body>
 <?php
+phpinfo();
 require 'dbSetting.php';
 
 ?>
