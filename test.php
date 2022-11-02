@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Ma page web</title>
-    </head>
-    
-    <body>
-        <h1>Ma page web</h1>
-        
-        <p>
-            Bonjour <!-- Insérer le pseudo du visiteur ici --> !
-        </p>
-
-    </body>
+html>
+ <head>
+ <meta charset="utf-8">
+ <!-- importer le fichier de style -->
+ <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
+ </head>
+ <body style='background:#fff;'>
+ <div id="content">
+ <!-- tester si l'utilisateur est connecté -->
+ <?php
+ session_start();
+ if($_SESSION['username'] !== ""){
+ $user = $_SESSION['username'];
+ // afficher un message
+ echo "Bonjour $user, vous êtes connecté";
+ }
+ ?>
+ 
+ </div>
+ </body>
 </html>

@@ -11,20 +11,13 @@ $con = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if($con === false){
     die("ERREUR : Impossible de se connecter. " . mysqli_connect_error());
 }
-// Check connection
-if ($con->connect_error) {
-    die("Connection failed: " . $con->connect_error);
-}
-echo "Connected successfully";
+echo "Connected successfully \n";
 if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
 	exit('Please complete the registration form!');
 }
 if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email'])) {
 	exit('Please complete the registration form');
 }
-echo $_POST['username'],"\n";
-echo $_POST['password'],"\n";
-echo $_POST['email'];
 if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
   exit('Email is not valid!');
 }
@@ -36,13 +29,14 @@ if ($stmt = $con->prepare('SELECT id, password FROM users WHERE username = ?')) 
 	$stmt->execute();
 	$stmt->store_result();
 	if ($stmt->num_rows > 0) {
-		echo 'Username exists, please choose another!';
+		echo 'Username exists, please choose another! \n';
 	} else {
 if ($stmt = $con->prepare('INSERT INTO users (username, password, email) VALUES (?, ?, ?)')) {
-	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+	//$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+	$password = $_POST['password'];
 	$stmt->bind_param('sss', $_POST['username'], $password, $_POST['email']);
 	$stmt->execute();
-	echo 'You have successfully registered, you can now login!';
+	echo 'You have successfully registered, you can now login! \n';
 } else {
 	echo 'Could not prepare statement!';
 }
@@ -51,5 +45,6 @@ if ($stmt = $con->prepare('INSERT INTO users (username, password, email) VALUES 
 } else {
 	echo 'Could not prepare statement!';
 }
+header('Location: login.html');
 $con->close();
 ?>

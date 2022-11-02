@@ -22,8 +22,8 @@ CREATE TABLE `Users`(
     UNIQUE(`Username`),
     `Password` VARCHAR(255) NOT NULL COMMENT 'User hashed password',
     `Email` VARCHAR(255) NOT NULL COMMENT 'user email',
-     `IDTasks` INT NOT NULL,
-    FOREIGN KEY (`IDTasks`) REFERENCES `Tasks`(`TaskID`),
+     `IDTasks` INT  NULL,
+    FOREIGN KEY (`IDTasks`) REFERENCES `Tasks`(`TaskID`) ON DELETE CASCADE,
     `GroupID` INT NULL COMMENT 'groupeID of user\'s group',
     FOREIGN KEY (`GroupID`) REFERENCES `Groups`(`ID`) ON DELETE CASCADE
 );
