@@ -20,20 +20,18 @@ if(isset($_POST['username']) && isset($_POST['password']))
  
  if($username !== "" && $password !== "")
  {
- $requete = "SELECT count(*) FROM users where 
-  username = '".$username."' and password = '".$password."' ";
- $exec_requete = mysqli_query($db,$requete);
- $reponse = mysqli_fetch_array($exec_requete);
- $count = $reponse['count(*)'];
- if($count!=0) 
- {
- $_SESSION['username'] = $username;
- header('Location: test.php');
- }
- else
- {
- header('Location: login.html?erreur=1');
- }
+  $requete = "SELECT password from users where username = '".$username."' ";
+  $exec_requete = mysqli_query($db,$requete);
+  $reponse      = mysqli_fetch_array($exec_requete);
+  $hash = $reponse['password'];
+  if (password_verify($password, $hash)) {
+    $_SESSION['username'] = $username;
+    header('Location: test.php');
+  }
+  else
+  {
+   header('Location: login.html?erreur=1'); // utilisateur ou mot de passe incorrect
+  }
  }
  else
  {

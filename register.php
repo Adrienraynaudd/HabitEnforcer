@@ -31,10 +31,10 @@ if ($stmt = $con->prepare('SELECT id, password FROM users WHERE username = ?')) 
 	if ($stmt->num_rows > 0) {
 		echo 'Username exists, please choose another! \n';
 	} else {
-if ($stmt = $con->prepare('INSERT INTO users (username, password, email) VALUES (?, ?, ?)')) {
-	//$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-	$password = $_POST['password'];
-	$stmt->bind_param('sss', $_POST['username'], $password, $_POST['email']);
+if ($stmt = $con->prepare('INSERT INTO users (id,username, password, email) VALUES (?, ?, ?, ?)')) {
+	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+	$id = IdGenrerate();
+	$stmt->bind_param('ssss',$id, $_POST['username'], $password, $_POST['email']);
 	$stmt->execute();
 	echo 'You have successfully registered, you can now login! \n';
 } else {
@@ -48,3 +48,9 @@ if ($stmt = $con->prepare('INSERT INTO users (username, password, email) VALUES 
 header('Location: login.html');
 $con->close();
 ?>
+<?php
+function IdGenrerate(){
+	$id = uniqid();
+	$id = str_replace(".", "", $id);
+	return $id;
+}
