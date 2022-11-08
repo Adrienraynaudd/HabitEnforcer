@@ -16,4 +16,16 @@ class DataBaseHandler
         }
         return $mysqli;
     }
+    public function dbTasksDump()
+    {
+    }
+    public function dbTasksGet()
+    {
+    }
+    public function dbCategoryDump()
+    {
+    }
+    public function dbCategoryGet()
+    {
+    }
 }

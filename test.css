@@ -1,4 +1,11 @@
 .register-form {
-  border-width: 1;
-  flex-direction: row;
+  border-style: solid;
+  border-color: black;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+category-creator {
+  display: none;
 }

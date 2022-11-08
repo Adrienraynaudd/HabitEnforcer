@@ -5,7 +5,8 @@ $db = $dbFunction->dbConnexion();
 if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["email"]) && $_POST["password"] == $_POST["passwordConfirmation"]) {
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $sqlCommand = "INSERT INTO Users (ID, Username, Password) VALUES (001, $username, $password)";
+    $email = $_POST["email"];
+    $sqlCommand = "INSERT INTO Users (ID, Username, Password, Email) VALUES (001, $username, $password, $email)";
 } else {
     echo ("something is not right with your forms");
 }
@@ -15,8 +16,6 @@ if (mysqli_query($db, $sqlCommand)) {
 } else {
     echo ("Error: " . $sqlCommand . "<br>" . mysqli_error($db));
 }
-$email = $_POST["email"];
-$username = $_POST["username"];
 mysqli_close($db);
 ?>
 <!DOCTYPE html>
