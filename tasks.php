@@ -1,23 +1,22 @@
 <?php
 require __DIR__ . "/dbSetting.php";
+require __DIR__ . "./register.php";
 $dbFunction = new DataBaseHandler;
-$db = $dbFunction->dbConnexion();
 if (isset($_POST["task_name"]) && isset($_POST["task_difficulty"]) && isset($_POST["task_recurrence"])) {
+    if (isset($_POST["task_category"])) {
+        $categoryID = $dbFunction->dbCategoryIDGet($_POST["task_category"], $_SESSION['id']);
+    } else {
+        $categoryID = IdGenrerate();
+        $dbFunction->dbCategoryPush($categoryID, $_POST["category-name"], $_POST['category-color'], $_SESSION['id']);
+    }
     $taskName = $_POST["task_name"];
     $taskDescription = $_POST["task_description"];
     $taskDifficulty = $_POST["task_difficulty"];
     $taskRecurrence = $_POST["task_recurrence"];
+    $dbFunction->dbTasksPush($taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $categoryID);
 } else {
     echo ("something is not right with your forms");
 }
-
-if (mysqli_query($db, $sqlCommand)) {
-    echo ("New user created successfuly !");
-} else {
-    echo ("Error: " . $sqlCommand . "<br>" . mysqli_error($db));
-}
-mysqli_close($db);
-$color = $_POST["task_color"];
 ?>
 <!DOCTYPE html>
 
