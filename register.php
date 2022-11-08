@@ -11,25 +11,29 @@ $con = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if($con === false){
     die("ERREUR : Impossible de se connecter. " . mysqli_connect_error());
 }
-echo "Connected successfully \n";
 if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
-	exit('Please complete the registration form!');
+	header('Location: registerhtml.php?erreur=1');
+	exit();
 }
 if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email'])) {
-	exit('Please complete the registration form');
+	header('Location: registerhtml.php?erreur=1');
+	exit();
 }
 if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-  exit('Email is not valid!');
+	header('Location: registerhtml.php?erreur=2');
+	exit();
 }
 if (preg_match('/[A-Za-z0-9]+/', $_POST['username']) == 0) {
-  exit('Username is not valid!');
+  header('Location: registerhtml.php?erreur=3');
+  exit();
 }
 if ($stmt = $con->prepare('SELECT id, password FROM users WHERE username = ?')) {
 	$stmt->bind_param('s', $_POST['username']);
 	$stmt->execute();
 	$stmt->store_result();
 	if ($stmt->num_rows > 0) {
-		echo 'Username exists, please choose another! \n';
+		header('Location: registerhtml.php?erreur=4');
+		exit();
 	} else {
 if ($stmt = $con->prepare('INSERT INTO users (id,username, password, email) VALUES (?, ?, ?, ?)')) {
 	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -45,7 +49,7 @@ if ($stmt = $con->prepare('INSERT INTO users (id,username, password, email) VALU
 } else {
 	echo 'Could not prepare statement!';
 }
-header('Location: login.html');
+header('Location: loginhtml.php');
 $con->close();
 ?>
 <?php
@@ -54,3 +58,4 @@ function IdGenrerate(){
 	$id = str_replace(".", "", $id);
 	return $id;
 }
+?>

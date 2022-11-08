@@ -3,8 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Register</title>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-        <link href="style.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="style.css" media="screen" type="text/css" />
 	</head>
 	<body>
 		<div class="register">
@@ -23,6 +22,20 @@
 				</label>
 				<input type="email" name="email" placeholder="Email" id="email" required>
 				<input type="submit" value="Register">
+				<?php
+					if(isset($_GET['erreur'])){
+    					$err = $_GET['erreur'];
+    				if($err==1 ){
+    					echo "<p style='color:red'>Complete your registration form</p>";
+					}elseif($err==2){
+						echo "<p style='color:red'>Email is not valid </p>";
+						}elseif($err==3){
+							echo "<p style='color:red'>Username is not valid</p>";
+							}elseif($err==4){
+								echo "<p style='color:red'>Username already exists</p>";
+								}
+							}
+							?>
 			</form>
 		</div>
 	</body>

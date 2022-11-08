@@ -30,17 +30,17 @@ if(isset($_POST['username']) && isset($_POST['password']))
   }
   else
   {
-   header('Location: login.html?erreur=1'); // utilisateur ou mot de passe incorrect
+   header('Location: loginhtml.php?erreur=1'); // utilisateur ou mot de passe incorrect
   }
  }
  else
  {
- header('Location: login.html?erreur=2');
+ header('Location: loginhtml.php?erreur=2');
  }
 }
 else
 {
- header('Location: login.html');
+ header('Location: loginhtml.php');
 }
 mysqli_close($db); // fermer la connexion
 ?>
