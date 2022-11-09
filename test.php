@@ -1,4 +1,4 @@
-html>
+<html>
  <head>
  <meta charset="utf-8">
  <!-- importer le fichier de style -->
@@ -9,13 +9,16 @@ html>
  <!-- tester si l'utilisateur est connecté -->
  <?php
  session_start();
- if($_SESSION['username'] !== ""){
- $user = $_SESSION['username'];
- // afficher un message
- echo "Bonjour $user, vous êtes connecté";
- }
+    if(isset($_SESSION['username']) && $_SESSION['username']!=""){
+    	// afficher un message
+    	echo "Welcome ".$_SESSION['username'];
+    }
+    else{
+    	header('Location: loginhtml.php');
+        exit();
+    }
  ?>
- 
+ <input type="button" value="Logout" onclick="window.location.href='logout.php'">
  </div>
  </body>
 </html>
