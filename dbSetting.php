@@ -28,12 +28,12 @@ class DBHandler
         }
         $columns = array_keys($data);
         $values = array_values($data);
-        $sql = "INSERT INTO $table (" . implode(',', $columns) . ") VALUES ('" . implode("', '", $values) . "' )";
+        $sql = "INSERT INTO $table (" . implode(',', $columns) . ") VALUES (\"" . implode("\", \"", $values) . "\" )";
         if ($stmt = $con->prepare($sql)) {
             $stmt->execute();
             echo 'successfully inserted : ' . $sql;
         } else {
-            echo "there has been an issue with : " . $sql;
+            echo "there has been an issue with : " . $sql . " " . mysqli_error($con);
         }
         mysqli_close($con);
     }
@@ -49,7 +49,7 @@ class DBHandler
             $request->execute();
             $resultQuerry = $request->get_result();
         } else {
-            die("Can't prepare the sql request properly : " . $sql);
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
         }
         mysqli_close($con);
         return $resultQuerry->fetch_assoc()['ID'];
@@ -66,7 +66,7 @@ class DBHandler
             $request->execute();
             $result = $request->get_result();
         } else {
-            die("Can't prepare the sql request properly : " . $sql);
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
         }
         mysqli_close($con);
         return $result->fetch_assoc();
@@ -87,10 +87,31 @@ class DBHandler
                 return true;
             }
         } else {
-            die("There has been an error with the authorID verification ! : " . $sql);
+            die("There has been an error with the authorID verification ! : " . $sql . " " . mysqli_error($con));
         }
         mysqli_close($con);
         return false;
+    }
+
+    public function getAllDataFromTable($table, $userID): string
+    {
+        $con = $this->connect();
+        $answerArray = array();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT * FROM " . $table . " WHERE CreatorID = '" . $userID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $answerArray[] = $row;
+            }
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return json_encode($answerArray);
     }
 
     public function IdGenrerate()

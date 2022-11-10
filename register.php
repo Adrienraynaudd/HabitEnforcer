@@ -38,16 +38,11 @@ if ($stmt = $con->prepare('SELECT id FROM users WHERE username = ?')) {
 		header('Location: registerhtml.php?erreur=4');
 		exit();
 	} else {
-		if ($stmt = $con->prepare('INSERT INTO `Users` (id,username, password, email) VALUES (?, ?, ?, ?)')) {
+		if ($stmt = $con->prepare('INSERT INTO users (id,username, password, email) VALUES (?, ?, ?, ?)')) {
 			$password = password_hash($password, PASSWORD_DEFAULT);
 			$id = IdGenrerate();
 			$stmt->bind_param('ssss', $id, $username, $password, $email);
-			$state = $stmt->execute();
-			if ($state) {
-				echo "it worked\n";
-			} else {
-				echo mysqli_error($con);
-			}
+			$stmt->execute();
 			echo 'You have successfully registered, you can now login! \n';
 		} else {
 			echo 'Could not prepare statement!';

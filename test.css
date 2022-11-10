@@ -9,3 +9,23 @@
 category-creator {
   display: none;
 }
+
+.task-card {
+  border-style: solid;
+  border-color: black;
+  min-width: 20%;
+  max-width: 25%;
+}
+
+task-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
