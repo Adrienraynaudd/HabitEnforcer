@@ -31,30 +31,66 @@ class DBHandler
         $sql = "INSERT INTO $table (" . implode(',', $columns) . ") VALUES ('" . implode("', '", $values) . "' )";
         if ($stmt = $con->prepare($sql)) {
             $stmt->execute();
+            echo 'successfully inserted : ' . $sql;
         } else {
-            echo "there has been an issue";
+            echo "there has been an issue with : " . $sql;
         }
-        echo 'successfully inserted : ' . $sql;
         mysqli_close($con);
     }
 
     public function getIDwithName(string $table, string $name)
     {
-        if ($table == 'Users') $param = 'Username';
-        else $param = 'name';
         $con = $this->connect();
         if ($con == false) {
             die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
         }
-        $sql = "SELECT ID FROM " . $table . " WHERE " . $param . " = '" . $name . "'";
+        $sql = "SELECT ID FROM " . $table . " WHERE Name = '" . $name . "'";
         if ($request = $con->prepare($sql)) {
             $request->execute();
             $resultQuerry = $request->get_result();
         } else {
-            die("Can't prepare the sql request right : " . $sql);
+            die("Can't prepare the sql request properly : " . $sql);
         }
         mysqli_close($con);
         return $resultQuerry->fetch_assoc()['ID'];
+    }
+
+    public function getFromDbByParam(string $table, string $param, string $condition): array
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT * FROM " . $table . " WHERE " . $param . " = '" . $condition . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql);
+        }
+        mysqli_close($con);
+        return $result->fetch_assoc();
+    }
+
+    public function verifyByAuthor(string $table, string $authorID, string $param, string $toverify): bool
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT " . $param . " FROM " . $table . " WHERE CreatorID = '" . $authorID . "' AND name = '" . $toverify . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result()->fetch_assoc();
+            if (count($result["name"]) > 0) {
+                mysqli_close($con);
+                return true;
+            }
+        } else {
+            die("There has been an error with the authorID verification ! : " . $sql);
+        }
+        mysqli_close($con);
+        return false;
     }
 
     public function IdGenrerate()

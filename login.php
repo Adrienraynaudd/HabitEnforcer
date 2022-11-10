@@ -1,5 +1,6 @@
 <?php
-session_start();
+require "dbSetting.php";
+$dbFunc = new DBHandler;
 if (isset($_POST['username']) && isset($_POST['password'])) {
   define('DB_SERVER', 'localhost');
   define('DB_USERNAME', 'root');
@@ -24,6 +25,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $hash = $reponse['password'];
     if (password_verify($password, $hash)) {
       $_SESSION['username'] = $username;
+      $_SESSION['id'] = $dbFunc->getIDwithName('Users', $username);
       header('Location: test.php');
     } else {
       header('Location: loginhtml.php?erreur=1'); // utilisateur ou mot de passe incorrect

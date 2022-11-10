@@ -8,12 +8,14 @@
 <html>
 
 <task-form>
-    <form id="new_tasks" class="register-form" method="post">
+    <form id="new_tasks" class="register-form" action='tasks.php' method="post">
         <input type="text" placeholder="task_name" name="task_name" id="task_name">
         <input type="text" name="task_description" placeholder="task_description" id="task_description">
         <categories>
             <select name="task_category">
+                <!-- mettre les options en automatisé avec les catégories de l'auteur -->
                 <option value="" style="color:blue">select a task category</option>
+                <option value="hello">hello</option>
             </select>
             <input type="button" id="new-cat" value="create new cat">
             <category-creator id="cat-creator">
@@ -36,7 +38,6 @@
         <button type="submit">submit</button>
     </form>
     <p style="color: <?php echo $_POST["task_color"] ?>">color</p>
-    <?php echo $_SESSION['id'] ?>
 </task-form>
 
 </html>
