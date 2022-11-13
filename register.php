@@ -18,7 +18,7 @@ if (!isset($username, $password, $email)) {
 	header('Location: registerhtml.php?erreur=1');
 	exit();
 }
-if (empty($_POST[$username]) || empty($password) || empty($email)) {
+if (empty($username) || empty($password) || empty($email)) {
 	header('Location: registerhtml.php?erreur=1');
 	exit();
 }
@@ -30,8 +30,8 @@ if (preg_match('/[A-Za-z0-9]+/', $username) == 0) {
   header('Location: registerhtml.php?erreur=3');
   exit();
 }
-if ($stmt = $con->prepare('SELECT id, password FROM users WHERE username = ?')) {
-	$stmt->bind_param('s', $email);
+if ($stmt = $con->prepare('SELECT id FROM users WHERE username = ?')) {
+	$stmt->bind_param('s', $username);
 	$stmt->execute();
 	$stmt->store_result();
 	if ($stmt->num_rows > 0) {
@@ -41,7 +41,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM users WHERE username = ?')) 
 if ($stmt = $con->prepare('INSERT INTO users (id,username, password, email) VALUES (?, ?, ?, ?)')) {
 	$password = password_hash($password, PASSWORD_DEFAULT);
 	$id = IdGenrerate();
-	$stmt->bind_param('ssss',$id, $email, $password, $email);
+	$stmt->bind_param('ssss',$id, $username, $password, $email);
 	$stmt->execute();
 	echo 'You have successfully registered, you can now login! \n';
 } else {
