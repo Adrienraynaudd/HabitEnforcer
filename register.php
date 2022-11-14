@@ -45,9 +45,6 @@ class Users
 			header('Location: loginhtml.php');
 		}
 	}
-}
-?>
-<?php
 	function SecurityCheck($con,$data)
 	{
 		$data = trim($data);
@@ -72,6 +69,7 @@ function VerifyEnteredData($username, $password, $email){
 	if (preg_match('/[A-Za-z0-9]+/', $username) == 0) {
 	  header('Location: registerhtml.php?erreur=3');
 	  exit();
+		}
 	}
 }
 ?>

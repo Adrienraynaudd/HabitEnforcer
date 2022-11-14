@@ -120,6 +120,22 @@ class DBHandler
         $id = str_replace(".", "", $id);
         return $id;
     }
+    public function getPasswordWithName(string $table, string $name)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT password FROM " . $table . " WHERE Name = '" . $name . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $resultQuerry = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $resultQuerry->fetch_assoc()['password'];
+    }
 
     // public function dbTasksPush($taskName, $taskDescription = NULL, $taskDifficulty, $taskRecurrence, $taskCategory)
     // {
