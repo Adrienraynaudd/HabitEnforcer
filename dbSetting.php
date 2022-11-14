@@ -10,7 +10,7 @@ class DBHandler
     {
         $this->name = 'habitenforcer';
         $this->user = 'root';
-        $this->password = 'root';
+        $this->password = '';
         $this->host = 'localhost';
     }
 
@@ -55,7 +55,7 @@ class DBHandler
         return $resultQuerry->fetch_assoc()['ID'];
     }
 
-    public function getFromDbByParam(string $table, string $param, string $condition): array
+    public function getFromDbByParam(string $table, string $param, string $condition): array|null
     {
         $con = $this->connect();
         if ($con == false) {

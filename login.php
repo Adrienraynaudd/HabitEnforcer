@@ -20,7 +20,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
  
  if($username !== "" && $password !== "")
  {
-  $requete = "SELECT password from users where username = '".$username."' ";
+  $requete = "SELECT password from users where name = '".$username."' ";
   $exec_requete = mysqli_query($db,$requete);
   $reponse      = mysqli_fetch_array($exec_requete);
   $hash = $reponse['password'];
