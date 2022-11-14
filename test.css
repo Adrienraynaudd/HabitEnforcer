@@ -29,3 +29,9 @@ card-header {
   flex-direction: row;
   justify-content: space-around;
 }
+
+task-menu {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-around;
+}

@@ -14,12 +14,20 @@
         <categories>
             <select name="task_category">
                 <!-- mettre les options en automatisé avec les catégories de l'auteur -->
-                <option value="" style="color:blue">select a task category</option>
-                <option value="hello">hello</option>
+                <option value="">select a task category</option>
+                <?php
+                $dbFunc = new DBHandler;
+                $categoriesName = $dbFunc->getNameByAuthor("TasksCategories", "636a88ae2da7e");
+                $options = "";
+                foreach ($categoriesName as $categoryName) {
+                    $options .= "<option value=" . $categoryName["name"] . ">" . $categoryName["name"] . "</option>";
+                }
+                echo $options;
+                ?>
             </select>
             <input type="button" id="new-cat" value="create new cat">
             <category-creator id="cat-creator">
-                <input type="color" name="category-color" value="<?php echo $color ?>">
+                <input type="color" name="category-color">
                 <input type="text" name="category-name" placeholder="category name">
             </category-creator>
         </categories>
@@ -37,7 +45,6 @@
         </select>
         <button type="submit">submit</button>
     </form>
-    <p style="color: <?php echo $_POST["task_color"] ?>">color</p>
 </task-form>
 
 </html>

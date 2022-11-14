@@ -114,55 +114,68 @@ class DBHandler
         return json_encode($answerArray);
     }
 
+    public function getNameByAuthor($table, $authorID): array
+    {
+        $con = $this->connect();
+        $answerArray = array();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT name FROM " . $table . " WHERE CreatorID = '" . $authorID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $answerArray[] = $row;
+            }
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $answerArray;
+    }
+
+    public function taskComplete($taskID)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT complete FROM Tasks WHERE TaskID = '" . $taskID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $result->fetch_assoc()["complete"];
+    }
+
+    public function updateTaskCompleState($taskID, $state)
+    {
+        if ($state == "complete") {
+            $state = 1;
+        } else {
+            $state = 0;
+        }
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "UPDATE Tasks SET complete = " . $state . " WHERE TaskID = '" . $taskID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+    }
+
     public function IdGenrerate()
     {
         $id = uniqid();
         $id = str_replace(".", "", $id);
         return $id;
     }
-
-    // public function dbTasksPush($taskName, $taskDescription = NULL, $taskDifficulty, $taskRecurrence, $taskCategory)
-    // {
-    //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);
-    //     if ($con == false) {
-    //         die("ERREUR : Can't connect to database : " . mysqli_connect_error());
-    //     }
-    //     if ($stmt = $con->prepare('INSERT INTO Tasks (TaskID, Name, Description, Difficulty, TimeSpan, Recurrence, CreationDate, CategoryID) VALUES (?,?,?,?,?,?,?,?)')) {
-    //         $taskID = IdGenrerate();
-    //         $stmt->bind_param('sssisss', $taskID, $taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $taskCategory);
-    //         $stmt->execute();
-    //         echo 'You have successfully created a new task !';
-    //     } else {
-    //         echo 'could not prepare statement !';
-    //     }
-    //     $stmt->close();
-    // }
-    // public function dbTasksGet()
-    // {
-    // }
-    // public function dbCategoryPush($categoryID, $categoryName, $categoryColor, $creatorID)
-    // {
-    //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);
-    //     if ($con == false) {
-    //         die("ERREUR : Can't connect to database : " . mysqli_connect_error());
-    //     }
-    //     if ($stmt = $con->prepare('INSERT INTO TasksCategories (ID, Name, Color, CreatorID) VALUES (?,?,?,?')) {
-    //         $stmt->bind_param('ssss', $categoryID, $categoryName, $categoryColor, $creatorID);
-    //         $stmt->execute();
-    //         echo 'You have successfully created a new category !';
-    //     } else {
-    //         echo 'could not prepare statement !';
-    //     }
-    //     $stmt->close();
-    // }
-    // public function dbCategoryIDGet($categoryName, $authorID): string
-    // {
-    //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);
-    //     if ($con == false) {
-    //         die("ERREUR : Can't connect to database : " . mysqli_connect_error());
-    //     }
-    //     $var = $con->query('SELECT ID FROM TasksCategories WHERE Name = ' . $categoryName . ' AND CreatorID = ' . $authorID);
-    //     $categoryID = $var->fetch_array();
-    //     return $categoryID;
-    // }
 }

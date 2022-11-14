@@ -11,6 +11,7 @@ if (isset($_POST["task_name"]) && isset($_POST["task_difficulty"]) && isset($_PO
         $newCat->dbCategoryPush();
     }
     $taskName = $_POST["task_name"];
+    $taskName = str_replace(" ", "_", $taskName);
     $taskDescription = $_POST["task_description"];
     $taskDifficulty = $_POST["task_difficulty"];
     $taskRecurrence = $_POST["task_recurrence"];
