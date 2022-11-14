@@ -21,11 +21,7 @@
  <input type="button" value="Logout" onclick="window.location.href='logout.php'">
  </div>
     <div class="Groupe">
-        <h1>GROUPE</h1>
-        <form action="searchUser.php" method="POST">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="submit"> 
-        </form> 
+        
     </div>
  </body>
 </html>
