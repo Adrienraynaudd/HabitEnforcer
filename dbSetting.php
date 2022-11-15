@@ -172,6 +172,10 @@ class DBHandler
         mysqli_close($con);
     }
 
+    public function userLoginDateUpdate($userID)
+    {
+    }
+
     public function IdGenrerate()
     {
         $id = uniqid();
