@@ -55,7 +55,7 @@ class DBHandler
         return $resultQuerry->fetch_assoc()['ID'];
     }
 
-    public function getFromDbByParam(string $table, string $param, string $condition): array
+    public function getFromDbByParam(string $table, string $param, string $condition)
     {
         $con = $this->connect();
         if ($con == false) {

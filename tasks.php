@@ -1,5 +1,6 @@
 <?php
 require "dbSetting.php";
+date_default_timezone_set('Europe/Paris');
 $db = new DBHandler;
 if (isset($_POST["task_name"]) && isset($_POST["task_difficulty"]) && isset($_POST["task_recurrence"])) {
     if ($_POST["task_category"] != "") {
@@ -17,6 +18,7 @@ if (isset($_POST["task_name"]) && isset($_POST["task_difficulty"]) && isset($_PO
     $taskRecurrence = $_POST["task_recurrence"];
     $newTask = new Task($db->IdGenrerate(), $taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $categoryID, $db->getIDwithName('Users', 'test'));
     $newTask->dbTaskPush();
+    header('Location: http://localhost:8888/tasklist.php');
 }
 
 

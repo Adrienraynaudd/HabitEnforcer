@@ -23,7 +23,7 @@ $diffcultyArray = array(
 <body>
     <task-menu>
         <task-filters>
-            <input type="text">
+            <input type="text" onkeyup="searchOnPageByName()" id="searchbar">
             <input type="button" id="show-form" value="New Task">
             <new-task-form id="new-task-form" style="display: none">
                 <?php include "taskhtml.php" ?>
@@ -43,43 +43,31 @@ $diffcultyArray = array(
             <div class="task-card" id="task-card-<?php echo $task->Name ?>" style="border-color: <?php echo $color ?>">
                 <card-header>
                     <p style="color: <?php echo $diffcultyArray[$diffculty] ?>">O</p>
-                    <p><?php echo str_replace("_", " ", $task->Name) ?></p>
+                    <p class="task-name"><?php echo str_replace("_", " ", $task->Name) ?></p>
                 </card-header>
                 <card-body>
                     <p><?php echo $task->Description ?></p>
                     <?php if ($dbFunction->taskComplete($task->TaskID) == 0) {
                         if (isset($_POST['complete-' . $task->Name])) {
                             $dbFunction->updateTaskCompleState($task->TaskID, "complete");
+                            echo "<meta http-equiv='refresh' content='0'>";
                         }
                         echo "<form method=\"post\"><input type=\"submit\" value=\"complete\" name=\"complete-$task->Name\"></form>";
                     } else {
-                        echo "<p id=\"count-down-$task->Name\"></p>";;
+                        echo "<p id=\"count-down-$task->TaskID\"></p>";;
                     }
                     ?>
                 </card-body>
             </div>
+            <script src="index.js"> </script>
             <script>
-                var countDownDate<?php echo $task->Name ?> = new Date('<?php echo $task->CreationDate ?>');
-                countDownDate<?php echo $task->Name ?>.setDate(countDownDate<?php echo $task->Name ?>.getDate() + 1);
-                var x = setInterval(function() {
-                    var now = new Date().getTime();
-                    var distance = countDownDate<?php echo $task->Name ?> - now;
-                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    document.getElementById("count-down-<?php echo $task->Name ?>").innerHTML = days + "d " + hours + "h " +
-                        minutes + "m " + seconds + "s ";
-                    if (distance < 0) {
-                        clearInterval(x);
-                        document.getElementById("count-down-<?php echo $task->Name ?>").innerHTML = "EXPIRED";
-                    }
-                }, 1000);
+                setCountDown('<?php echo $task->CreationDate ?>', '<?php echo $task->TaskID ?>');
             </script>
         <?php } ?>
     </task-list>
 </body>
 
+<script src="index.js"> </script>
 <script>
     const buttonTask = document.getElementById("show-form");
     let newTaskClicked = false;
