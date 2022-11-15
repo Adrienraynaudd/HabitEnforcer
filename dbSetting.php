@@ -136,7 +136,14 @@ class DBHandler
         mysqli_close($con);
         return $resultQuerry->fetch_assoc()['password'];
     }
-
+    function SecurityCheck($con,$data)
+	{
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		$data = mysqli_real_escape_string($con,$data);
+		return $data;
+	}
     // public function dbTasksPush($taskName, $taskDescription = NULL, $taskDifficulty, $taskRecurrence, $taskCategory)
     // {
     //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);
