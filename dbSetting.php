@@ -266,4 +266,12 @@ class DBHandler
         }
         mysqli_close($con);
     }
+    function SecurityCheck($con, $data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        $data = mysqli_real_escape_string($con, $data);
+        return $data;
+    }
 }

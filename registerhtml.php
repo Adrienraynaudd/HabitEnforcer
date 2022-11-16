@@ -7,8 +7,9 @@
 	</head>
 	<body>
 		<div class="register">
-			<h1>Register</h1>
+		<section>
 			<form action="register.php" method="post" autocomplete="off">
+			<h1>Register</h1>
 				<label for="username">
 					<i class="user"></i>
 				</label>
@@ -20,8 +21,9 @@
 				<label for="email">
 					<i class="mail"></i>
 				</label>
-				<input type="email" name="email" placeholder="Email" id="email" required>
-				<input type="submit" value="Register">
+				<input type="email" name="email" placeholder="Email" id="email" required >
+				<input type="submit" value="Register" class="button">
+				<input type="button" value="Login" onclick="window.location.href='loginhtml.php'" class="button">
 				<?php
 					if(isset($_GET['erreur'])){
     					$err = $_GET['erreur'];
@@ -37,6 +39,7 @@
 							}
 							?>
 			</form>
+		</section>
 		</div>
 	</body>
 </html>
