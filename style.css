@@ -10,7 +10,7 @@ section{
     justify-content: center;
     align-items: center;
     animation-name: back;
-    animation-duration: 5s;
+    animation-duration: 25s;
     animation-iteration-count: infinite;
     animation-direction: linear;
 }
@@ -31,7 +31,8 @@ input{
     box-sizing: border-box;
     border-radius: 6px;
 }
-input[type="submit"]{
+.button {
+    background-color: #DA70D6;
   font-weight: bold;
   cursor: pointer;
 }
@@ -40,6 +41,6 @@ input[type="submit"]{
         filter:hue-rotate(0deg);
     }
     100%{
-        filter:hue-rotate(360deg);
+        filter:hue-rotate(1800deg);
     }
 }

@@ -8,11 +8,12 @@
  <body>
     <section>
         
-        <form name ="anim" action="login.php" method="POST">
-            <h1>Authentification</h1>
+        <form  action="login.php" method="POST">
+            <h1>Login</h1>
             <input type="text" placeholder="Entrer le nom d'utilisateur" name="username" required>
             <input type="password" placeholder="Entrer le mot de passe" name="password" required>
-            <input type="submit" id='submit' value='LOGIN' >
+            <input type="submit" id='submit' value='LOGIN' class="button" >
+            <input type="button" value="Register" onclick="window.location.href='registerhtml.php'" class="button">
             <?php
             if(isset($_GET['erreur'])){
                 $err = $_GET['erreur'];
