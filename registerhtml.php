@@ -28,13 +28,13 @@
 					if(isset($_GET['erreur'])){
     					$err = $_GET['erreur'];
     				if($err==1 ){
-    					echo "<p style='color:red'>Complete your registration form</p>";
+    					echo "<h1 style='color:white'>Complete your registration form</h1>";
 					}elseif($err==2){
-						echo "<p style='color:red'>Email is not valid </p>";
+						echo "<h1 style='color:white'>Email is not valid </h1>";
 						}elseif($err==3){
-							echo "<p style='color:red'>Username is not valid</p>";
+							echo "<h1 style='color:white'>Username is not valid</h1>";
 							}elseif($err==4){
-								echo "<p style='color:red'>Username already exists</p>";
+								echo "<h1 style='color:white'>Username already exists</h1>";
 								}
 							}
 							?>

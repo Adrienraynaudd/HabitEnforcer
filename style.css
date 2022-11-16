@@ -14,15 +14,19 @@ section{
     animation-iteration-count: infinite;
     animation-direction: linear;
 }
-form{
+/*form{
     width:500px;
     background-color: rgba(0,0,0,0.4);
     padding: 60px;
     box-sizing: border-box;
     border-radius: 20px;
-}
-input{
-    display: block;
+}*/
+.button {
+    color: inherit;
+    background-color: #DA70D6;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
     margin: 10px auto;
     width: 100%;
     padding:6px 10px;
@@ -30,11 +34,6 @@ input{
     border: none;
     box-sizing: border-box;
     border-radius: 6px;
-}
-.button {
-    background-color: #DA70D6;
-  font-weight: bold;
-  cursor: pointer;
 }
 @keyframes back {
     0%{

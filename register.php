@@ -47,12 +47,12 @@ class Users
 		);
 		$this->db->getFromDbByParam("users", "name", $this->name);
 		if ($this->db->getFromDbByParam("users", "name", $this->name) != null) {
-			header('Location: register.php?erreur=4');
+			header('Location: registerhtml.php?erreur=4');
 			exit();
 		} else {
 			$this->db->insert($data, 'users');
 			SendMail($this->email, $this->key, $this->name);
-			echo "Votre compte a bien été créé ! veuillez confirmer votre compte en cliquant sur le lien que nous vous avons envoyé par mail.";
+			header('Location: loginhtml.php');
 		}
 	}
 }
@@ -76,13 +76,11 @@ function VerifyEnteredData($username, $password, $email){
 	}
 	function SendMail($email,$key,$username){
 			$to = $email;
-			$headers = "From: habitenforcer66@gmail.com";
+			$header = "From: habitenforcer66@gmail.com";
 			$header.='Content-Type:text/html; charset="uft-8"'."\n";
 			$header.='Content-Transfer-Encoding: 8bit';
         	$subject = "Test mail";
         	$message ="http://localhost/HabitEnforcer/confirm.php?username=" . urlencode($username) . "&key=" . $key;
-
-        	mail($to,$subject,$message,$headers);
-        	echo "Mail Sent.";
+        	mail($to,$subject,$message,$header);
 	}
 ?>
