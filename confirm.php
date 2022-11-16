@@ -5,12 +5,9 @@ $con = $db->connect();
 if (isset($_GET['username']) && isset($_GET['key']) AND !empty($_GET['username']) AND !empty($_GET['key'])) {
     $username = $db->SecurityCheck($con, $_GET['username']);
     $key = $_GET['key'];
-    echo $username;
-    echo $key;
     $requser = $con->prepare("SELECT * FROM users WHERE name = ? AND confirmkey = ?");
     $requser-> execute(array($username, $key));
     $userexist = $requser->fetch();
-    echo $userexist;
     if ($userexist != null) {
         $user = $requser->fetch();
         if ($user['confirme'] == 0) {
@@ -26,6 +23,4 @@ if (isset($_GET['username']) && isset($_GET['key']) AND !empty($_GET['username']
 }else {
     echo "Erreur";
 }
-
-
 ?>

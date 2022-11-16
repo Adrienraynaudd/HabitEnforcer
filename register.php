@@ -52,7 +52,7 @@ class Users
 		} else {
 			$this->db->insert($data, 'users');
 			SendMail($this->email, $this->key, $this->name);
-			header('Location: loginhtml.php');
+			echo "Votre compte a bien été créé ! veuillez confirmer votre compte en cliquant sur le lien que nous vous avons envoyé par mail.";
 		}
 	}
 }
