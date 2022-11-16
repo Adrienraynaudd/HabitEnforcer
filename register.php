@@ -1,64 +1,75 @@
 <?php
-// connection base de donnee
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'root');
-define('DB_NAME', 'habitenforcer');
+require_once 'dbSetting.php';
+$db = new DBHandler;
+$con = $db->connect();
+$groupeID = 5456484165165;
+$username = SecurityCheck($con,$_POST['username']);
+ $password = SecurityCheck($con,$_POST['password']);
+ $email =  SecurityCheck($con,$_POST['email']);
+ VerifyEnteredData($username,$password,$email);
+ $newUsers = new Users($db->IdGenrerate(),$username,$password,$email);
+ $newUsers->dbUserPush();
 
-// Connexion à la base de données MySQL
-$con = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-// Vérifier la connexion
-if ($con === false) {
-	die("ERREUR : Impossible de se connecter. " . mysqli_connect_error());
-}
-$username = mysqli_real_escape_string($con, htmlspecialchars($_POST['username']));
-$password = mysqli_real_escape_string($con, htmlspecialchars($_POST['password']));
-$email = mysqli_real_escape_string($con, htmlspecialchars($_POST['email']));
-if (!isset($username, $password, $email)) {
-	header('Location: registerhtml.php?erreur=1');
-	exit();
-}
-if (empty($username) || empty($password) || empty($email)) {
-	header('Location: registerhtml.php?erreur=1');
-	exit();
-}
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-	header('Location: registerhtml.php?erreur=2');
-	exit();
-}
-if (preg_match('/[A-Za-z0-9]+/', $username) == 0) {
-	header('Location: registerhtml.php?erreur=3');
-	exit();
-}
-if ($stmt = $con->prepare('SELECT id FROM users WHERE username = ?')) {
-	$stmt->bind_param('s', $username);
-	$stmt->execute();
-	$stmt->store_result();
-	if ($stmt->num_rows > 0) {
-		header('Location: registerhtml.php?erreur=4');
-		exit();
-	} else {
-		if ($stmt = $con->prepare('INSERT INTO users (id,username, password, email) VALUES (?, ?, ?, ?)')) {
-			$password = password_hash($password, PASSWORD_DEFAULT);
-			$id = IdGenrerate();
-			$stmt->bind_param('ssss', $id, $username, $password, $email);
-			$stmt->execute();
-			echo 'You have successfully registered, you can now login! \n';
+
+class Users
+{
+	 // TODO ajout groupID
+	public  $id;
+	public $name;
+	public $password;
+	public $email;
+	public $groupeID;
+	public $db;
+	function __construct($id,$name, $password, $email)
+	{
+		$this->id = $id;
+		$this->name = $name;
+		$this->password = password_hash($password, PASSWORD_DEFAULT);
+		$this->email = $email;
+		$this->db = new DBHandler;
+	}
+	public function dbUserPush()
+	{
+		$data = array(
+			"ID" => $this->id,
+			"name" => $this->name,
+			"password" => $this->password,
+			"email" => $this->email,
+		);
+		$this->db->getFromDbByParam("users", "name", $this->name);
+		if ($this->db->getFromDbByParam("users", "name", $this->name) != null) {
+			header('Location: register.php?erreur=4');
+			exit();
 		} else {
-			echo 'Could not prepare statement!';
+			$this->db->insert($data, 'users');
+			header('Location: loginhtml.php');
 		}
 	}
-	$stmt->close();
-} else {
-	echo 'Could not prepare statement!';
-}
-$con->close();
-?>
-<?php
-function IdGenrerate()
-{
-	$id = uniqid();
-	$id = str_replace(".", "", $id);
-	return $id;
+	function SecurityCheck($con,$data)
+	{
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		$data = mysqli_real_escape_string($con,$data);
+		return $data;
+	}
+function VerifyEnteredData($username, $password, $email){
+	if (!isset($username, $password, $email)) {
+		header('Location: registerhtml.php?erreur=1');
+		exit();
+	}
+	if (empty($username) || empty($password) || empty($email)) {
+		header('Location: registerhtml.php?erreur=1');
+		exit();
+	}
+	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		header('Location: registerhtml.php?erreur=2');
+		exit();
+	}
+	if (preg_match('/[A-Za-z0-9]+/', $username) == 0) {
+	  header('Location: registerhtml.php?erreur=3');
+	  exit();
+		}
+	}
 }
 ?>

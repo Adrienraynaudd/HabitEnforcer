@@ -1,4 +1,4 @@
-function setCountDown(limitDate, taskID) {
+function setCountDown(limitDate, itemID) {
   var countDownDate = new Date(limitDate);
   countDownDate.setDate(countDownDate.getDate() + 1);
   var interval = setInterval(function () {
@@ -10,11 +10,11 @@ function setCountDown(limitDate, taskID) {
     );
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    document.getElementById("count-down-" + taskID).innerHTML =
+    document.getElementById("count-down-" + itemID).innerHTML =
       days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
     if (distance < 0) {
       clearInterval(interval);
-      document.getElementById("count-down-" + taskID).innerHTML = "EXPIRED";
+      document.getElementById("count-down-" + itemID).innerHTML = "EXPIRED";
     }
   }, 1000);
 }
