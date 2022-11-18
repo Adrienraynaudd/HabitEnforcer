@@ -2,7 +2,7 @@
 // connection base de donnee
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'root');
+define('DB_PASSWORD', '');
 define('DB_NAME', 'habitenforcer');
 
 // Connexion à la base de données MySQL
@@ -30,7 +30,7 @@ if (preg_match('/[A-Za-z0-9]+/', $username) == 0) {
 	header('Location: registerhtml.php?erreur=3');
 	exit();
 }
-if ($stmt = $con->prepare('SELECT id FROM users WHERE username = ?')) {
+if ($stmt = $con->prepare('SELECT id FROM users WHERE Name = ?')) {
 	$stmt->bind_param('s', $username);
 	$stmt->execute();
 	$stmt->store_result();
@@ -38,7 +38,7 @@ if ($stmt = $con->prepare('SELECT id FROM users WHERE username = ?')) {
 		header('Location: registerhtml.php?erreur=4');
 		exit();
 	} else {
-		if ($stmt = $con->prepare('INSERT INTO users (id,username, password, email) VALUES (?, ?, ?, ?)')) {
+		if ($stmt = $con->prepare('INSERT INTO users (id,Name, password, email) VALUES (?, ?, ?, ?)')) {
 			$password = password_hash($password, PASSWORD_DEFAULT);
 			$id = IdGenrerate();
 			$stmt->bind_param('ssss', $id, $username, $password, $email);

@@ -20,8 +20,6 @@
  ?>
  <input type="button" value="Logout" onclick="window.location.href='logout.php'">
  </div>
-    <div class="Groupe">
-        
-    </div>
+   <input type="button" onclick="location.href='/habitenforcer/grouphtml.php';" value="GROUPE"/>
  </body>
 </html>
