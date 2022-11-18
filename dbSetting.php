@@ -72,6 +72,22 @@ class DBHandler
         return $result->fetch_assoc();
     }
 
+    public function getMembreGroupFromIDGroup(string $idGroup){
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT Name FROM Users WHERE GroupID = '" . $idGroup . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $result->fetch_assoc();
+    }
+
     public function verifyByAuthor(string $table, string $authorID, string $param, string $toverify): bool
     {
         $con = $this->connect();
@@ -137,21 +153,27 @@ class DBHandler
         return $resultQuerry->fetch_assoc()['password'];
     }
 
-    public function update(array $dataUpdate, string $table, array $condition){ //$Condition = ("ID = 5", Score = 5")
+    public function update(array $dataUpdate, string $table, string $condition){ //$Condition = ("ID = 5", Score = 5")
         $con = $this->connect();
         if ($con == false) {
             die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
         }
-        $sql = "UPDATE ".$table." set "."GroupID = ".$dataUpdate["GroupID"]." WHERE ".implode(" AND ", $condition); //PRoblème avec ma gestion de la table
+        $sql = "UPDATE ".$table." set "."GroupID = ".$dataUpdate["GroupID"]." WHERE ".$condition; //PRoblème avec ma gestion de la table
         if ($request = $con->prepare($sql)) {
             $request->execute();
-            $resultQuerry = $request->get_result();
         } else {
             die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
         }
         mysqli_close($con);
-        return $resultQuerry->fetch_assoc()[$table];
     }
+    function SecurityCheck($con,$data)
+	{
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		$data = mysqli_real_escape_string($con,$data);
+		return $data;
+	}
     // public function dbTasksPush($taskName, $taskDescription = NULL, $taskDifficulty, $taskRecurrence, $taskCategory)
     // {
     //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);

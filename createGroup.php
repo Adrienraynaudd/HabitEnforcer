@@ -13,11 +13,11 @@ if(isset($_POST['groupName'])) {//faire une vérif du nom
     );  
     $dbFunction -> insert($data, "groups");
     $dataUpdate = array(
-      "GroupID" => $data["ID"],
+      "GroupID" => "'".$data["ID"]."'",
     );
-    $condition = array("ID = ".$data["GroupCreator"]); 
-    //$dbFunction -> update($dataUpdate, "users", $condition);
+    $condition = "ID = '".$data["GroupCreator"]."'"; 
+    $dbFunction -> update($dataUpdate, "users", $condition);
   }
-  
 }
+header('Location: grouphtml.php');
 ?>
