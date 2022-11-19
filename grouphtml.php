@@ -28,9 +28,15 @@
         if($iD_User === $iDCreator["GroupCreator"]){ // C'est le créateur du Groupe
             $Member = $dbFunction -> getMembreGroupFromIDGroup($iDGroup["GroupID"]);
             echo("MEMBRES :<br>");
-            foreach ($Member as $value) {
-                echo "$value <br>";
+            echo("<form action='deleteGroup.php' method='POST'>");
+            foreach ($Member as $value) { //CHANGEMENT EN BUTTON
+                echo "$value <br>   ";
+                echo ("
+                <input class='corbeille' type='image' src='corbeille.png' value='$value' id='delete' name='delete'>
+                <input type='text' id='delete' name='delete' placeholder='TEST' require>
+                <input type='submit'>");
             }
+            echo("</form>");
             echo("
             <form action='addGroup.php' method='POST'>
             <input type='text' id='userAdd' placeholder='User add' name='userAdd' require>
