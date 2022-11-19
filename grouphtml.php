@@ -25,16 +25,13 @@
     $iDGroup = $dbFunction -> getFromDbByParam("users", "ID", $iD_User);
     if($iDGroup["GroupID"] !== null){
         $iDCreator = $dbFunction -> getFromDbByParam("Groups","ID", $iDGroup["GroupID"]);
-        if($iD_User === $iDCreator["GroupCreator"]){ // C'est le créateur du Groupe
+        if($iD_User === $iDCreator["GroupCreator"]){ // C'est le créateur du Groupe donc ADD et supp disponible 
             $Member = $dbFunction -> getMembreGroupFromIDGroup($iDGroup["GroupID"]);
             echo("MEMBRES :<br>");
             echo("<form action='deleteGroup.php' method='POST'>");
-            foreach ($Member as $value) { //CHANGEMENT EN BUTTON
+            foreach ($Member as $value) { //CHANGEMENT l'image par un button avec le smiley corbeille
                 echo "$value <br>   ";
-                echo ("
-                <input class='corbeille' type='image' src='corbeille.png' value='$value' id='delete' name='delete'>
-                <input type='text' id='delete' name='delete' placeholder='TEST' require>
-                <input type='submit'>");
+                echo ("<input class='corbeille' type='image' src='corbeille.png' value='$value' id='delete' name='delete'>");
             }
             echo("</form>");
             echo("
@@ -42,10 +39,10 @@
             <input type='text' id='userAdd' placeholder='User add' name='userAdd' require>
             <input type='submit'> 
             </form>");
-        }else{
+        }else{ // LA personne peut juste ce supp et voir les membres
             echo("en cours");
         }
-    }else{
+    }else{ 
         echo("
         <form action='createGroup.php' method='POST'>
         <input type='text' id='groupName' placeholder='Group Name' name='groupName' require>
