@@ -1,9 +1,10 @@
 <?php
-require "dbSetting.php";
+require "../function/dbSetting.php";
+session_start();
 date_default_timezone_set('Europe/Paris');
 $dbFunction = new DBHandler;
-$tasks = json_decode($dbFunction->getAllDataFromTable("Tasks", $dbFunction->getIDwithName("users", "test")), false);
-$categories = json_decode($dbFunction->getAllDataFromTable("TasksCategories", $dbFunction->getIDwithName("users", "test")), false);
+$tasks = json_decode($dbFunction->getAllDataFromTable("Tasks", $_SESSION["userID"]), false);
+$categories = json_decode($dbFunction->getAllDataFromTable("TasksCategories", $_SESSION["userID"]), false);
 $diffcultyArray = array(
     "easy" => "green",
     "normal" => "yellow",
@@ -18,14 +19,19 @@ $diffcultyArray = array(
 <head>
     <meta charset="UTF-8">
     <title>test tasks</title>
-    <link href="./test.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
     <task-menu>
         <task-filters>
             <input type="text" onkeyup="searchOnPageByName()" id="searchbar">
-            <?php $userCanCreate = $dbFunction->getFromDbByParam("Users", "ID", $dbFunction->getIDwithName("users", "test"))["CanCreate"];
+            <new-task-form id="new-task-form" style="display: none">
+                <?php include "taskhtml.php" ?>
+            </new-task-form>
+        </task-filters>
+        <task-creator>
+            <?php $userCanCreate = $dbFunction->getFromDbByParam("Users", "ID", $_SESSION["userID"])["CanCreate"];
             if ($userCanCreate == 1) {
                 echo "<input type=\"button\" id=\"show-form\" value=\"New Task\">";
             } else {
@@ -33,10 +39,7 @@ $diffcultyArray = array(
                 $countDownDate = $countDownDate->format("Y-m-d 0:0:0");
                 echo "<p id=\"count-down-createTask\"></p>";
             } ?>
-            <new-task-form id="new-task-form" style="display: none">
-                <?php include "taskhtml.php" ?>
-            </new-task-form>
-        </task-filters>
+        </task-creator>
     </task-menu>
     <task-list>
         <?php
@@ -75,7 +78,7 @@ $diffcultyArray = array(
     </task-list>
 </body>
 
-<script src="index.js"> </script>
+<script src="index.js"></script>
 <script>
     var countDownDate = new Date('<?php echo $countDownDate ?>');
     setCountDown('<?php echo $countDownDate ?>', 'createTask');

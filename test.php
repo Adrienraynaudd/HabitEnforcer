@@ -15,12 +15,13 @@
         if (isset($_SESSION['username']) && $_SESSION['username'] != "") {
             // afficher un message
             echo "Welcome " . $_SESSION['username'];
+            echo "ID : " . $_SESSION['userID'];
         } else {
             header('Location: loginhtml.php');
             exit();
         }
         ?>
-        <input type="button" value="Logout" onclick="window.location.href='logout.php'">
+        <input type="button" value="Logout" onclick="window.location.href='function/logout.php'">
     </div>
 </body>
 

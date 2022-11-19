@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>test tasks</title>
-    <link href="./test.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
 </head>
 <html>
 
 <task-form>
-    <form id="new_tasks" class="register-form" action='tasks.php' method="post">
+    <form id="new_tasks" class="register-form" action='../function/tasks.php' method="post">
         <input type="text" placeholder="task_name" name="task_name" id="task_name">
         <input type="text" name="task_description" placeholder="task_description" id="task_description">
         <categories>
@@ -17,7 +17,7 @@
                 <option value="">select a task category</option>
                 <?php
                 $dbFunc = new DBHandler;
-                $categoriesName = $dbFunc->getNameByAuthor("TasksCategories", "636a88ae2da7e");
+                $categoriesName = $dbFunc->getNameByAuthor("TasksCategories", $_SESSION["userID"]);
                 $options = "";
                 foreach ($categoriesName as $categoryName) {
                     $options .= "<option value=" . $categoryName["name"] . ">" . $categoryName["name"] . "</option>";

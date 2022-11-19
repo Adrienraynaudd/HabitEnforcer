@@ -17,9 +17,9 @@ if (isset($_POST["task_name"]) && isset($_POST["task_difficulty"]) && isset($_PO
     $taskDescription = $_POST["task_description"];
     $taskDifficulty = $_POST["task_difficulty"];
     $taskRecurrence = $_POST["task_recurrence"];
-    $newTask = new Task($db->IdGenrerate(), $taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $categoryID, $db->getIDwithName('Users', 'test'));
+    $newTask = new Task($db->IdGenrerate(), $taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $categoryID, $_SESSION["userID"]);
     $newTask->dbTaskPush();
-    header('Location: http://localhost:8888/tasklist.php');
+    header('Location: http://localhost:8888/php_template/tasklist.php');
 }
 
 

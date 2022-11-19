@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+}
+.login-container {
+  height: 100vh;
+  background-image: url("background.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: back;
+  animation-duration: 25s;
+  animation-iteration-count: infinite;
+  animation-direction: linear;
+}
+form[id="login-form"] {
+  width: 500px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 60px;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+.login-input {
+  display: block;
+  margin: 10px auto;
+  width: 100%;
+  padding: 6px 10px;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+.login-button {
+  background-color: #da70d6;
+  font-weight: bold;
+  cursor: pointer;
+}
+@keyframes back {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(1800deg);
+  }
+}
+
+task-creator #count-down-createTask {
+  color: #da70d6;
+}
+
+task-filter #searchbar {
+  width: 100%;
+}
+
+.register-form {
+  border-style: solid;
+  border-color: black;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+category-creator {
+  display: none;
+}
+
+.task-card {
+  border-style: solid;
+  border-color: black;
+  min-width: 20%;
+  max-width: 25%;
+}
+
+task-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+task-menu {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-around;
+}

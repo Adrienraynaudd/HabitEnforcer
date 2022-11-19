@@ -13,7 +13,7 @@ if (isset($_GET['username']) && isset($_GET['key']) AND !empty($_GET['username']
         if ($user['confirme'] == 0) {
             $updateUser = $con->prepare("UPDATE users SET confirme = 1 WHERE name = ? AND confirmkey = ?");
             $updateUser->execute(array($username, $key));
-            header('Location: loginhtml.php');
+            header('Location: php_template/loginhtml.php');
         } else {
             echo "Votre compte a déjà été confirmé !";
         }
@@ -23,4 +23,3 @@ if (isset($_GET['username']) && isset($_GET['key']) AND !empty($_GET['username']
 }else {
     echo "Erreur";
 }
-?>
