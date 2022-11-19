@@ -90,3 +90,130 @@ task-menu {
   display: flex;
   justify-content: space-around;
 }
+
+header {
+  width: 100%;
+  height: 8%;
+  background-color: #432874;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+header left {
+  min-width: 33%;
+  display: flex;
+  justify-content: start;
+}
+
+header middle {
+  min-width: 33%;
+  display: flex;
+  justify-content: center;
+}
+
+header right {
+  min-width: 33%;
+  display: flex;
+  justify-content: end;
+}
+
+header left content input {
+  border-style: none;
+  background: none;
+  width: 25px;
+  height: 25px;
+}
+
+header left content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 2%;
+}
+
+burger-menu {
+  width: 100%;
+  display: flex;
+  background-color: #7c4fd1;
+  flex-direction: column;
+  display: none;
+}
+
+burger-menu div {
+  display: flex;
+  justify-content: center;
+}
+burger-menu div:hover {
+  display: flex;
+  justify-content: center;
+  background-color: #5f3ca1;
+}
+
+burger-menu a {
+  color: white;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-decoration: none;
+}
+
+header middle content img {
+  margin-top: 10%;
+  width: 65px;
+  height: 65px;
+}
+
+header right content user img {
+  height: 35px;
+  width: 35px;
+}
+
+header right content {
+  width: 80%;
+  margin-right: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+header right content user {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  width: 100%;
+  height: 100%;
+}
+
+header right content a {
+  margin-left: 5%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+header right content a input {
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  will-change: box-shadow, transform;
+  background: radial-gradient(100% 100% at 100% 0%, #432874 0%, #7c4fd1 100%);
+  box-shadow: 0px 2px 4px rgb(45 35 66 / 40%),
+    0px 7px 13px -3px rgb(45 35 66 / 30%),
+    inset 0px -3px 0px rgb(58 65 111 / 50%);
+  border-radius: 6px;
+  color: #fff;
+  height: 35px;
+  font-size: 18px;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+header right content a input:hover {
+  box-shadow: 0px 4px 8px rgb(45 35 66 / 40%),
+    0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #7c4fd1;
+  transform: translateY(-2px);
+}
+header right content a input:active {
+  box-shadow: inset 0px 3px 7px #7c4fd1;
+  transform: translateY(2px);
+}

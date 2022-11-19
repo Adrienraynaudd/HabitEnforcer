@@ -23,6 +23,7 @@ $diffcultyArray = array(
 </head>
 
 <body>
+    <?php include "header.php" ?>
     <task-menu>
         <task-filters>
             <input type="text" onkeyup="searchOnPageByName()" id="searchbar">
