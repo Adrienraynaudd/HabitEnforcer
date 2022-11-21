@@ -320,4 +320,18 @@ class DBHandler
         mysqli_close($con);
         return $resultQuerry->fetch_assoc()['avatar'];
     }
+    public function deleteGroup (string $iDGroup){
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "DELETE FROM groups WHERE ID = '".$iDGroup."'";
+        if ($stmt = $con->prepare($sql)) {
+            $stmt->execute();
+            echo 'successfully delete : ' . $sql;
+        } else {
+            echo "there has been an issue with : " . $sql . " " . mysqli_error($con);
+        }
+        mysqli_close($con);
+    }
 }
