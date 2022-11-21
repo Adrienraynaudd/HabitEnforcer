@@ -77,7 +77,7 @@ function VerifyEnteredData($username, $password, $email)
 			$header.='Content-Type:text/html; charset="uft-8"'."\n";
 			$header.='Content-Transfer-Encoding: 8bit';
         	$subject = "mail de confirmation";
-        	$message ="http://localhost/HabitEnforcer/confirm.php?username=" . urlencode($username) . "&key=" . $key;
+        	$message ="http://localhost/HabitEnforcer/function/confirm.php?username=" . urlencode($username) . "&key=" . $key;
         	mail($to,$subject,$message,$header);
 	}
 ?>

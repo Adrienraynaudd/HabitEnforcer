@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "header.php";
 require_once '../function/dbSetting.php';
 $db = new DBHandler;
 $con = $db->connect();
@@ -30,7 +31,10 @@ if (isset($_SESSION['username']) && $_SESSION['username'] != "") {
                     if(isset($_GET['erreur'])){
                         $err = $_GET['erreur'];
                     if ($err==1) {
-                        echo"error during the upload";
+                        echo"<p>Username already taken</p>";
+                    }
+                    elseif ($err==2) {
+                        echo"<p>email is not valid</p>";
                     }
                 }
                     ?>
@@ -61,11 +65,23 @@ function editProfil($newUsername, $newEmail)
     $con = $db->connect();
     $checkUsername = $db->SecurityCheck($con, $newUsername);
     $checkEmail = $db->SecurityCheck($con, $newEmail);
-    $newP = $con->prepare("UPDATE users SET name = ?, email = ? WHERE name = ?");
-    $newP->bind_param("sss", $checkUsername, $checkEmail, $_SESSION['username']);
-    $newP->execute();
-    $_SESSION['username'] = $checkUsername;
-    $_SESSION['email'] = $checkEmail;
+    $requser = $con->prepare("SELECT * FROM users WHERE name = ?");
+    $requser-> execute(array($checkUsername));
+    $userexist = $requser->fetch();
+    if ($userexist == null){
+        if (filter_var($checkEmail, FILTER_VALIDATE_EMAIL)) {
+            $req = $con->prepare("UPDATE users SET name = ?, email = ? WHERE name = ?");
+            $req->execute(array($checkUsername, $checkEmail, $_SESSION['username']));
+            $_SESSION['username'] = $checkUsername;
+            $_SESSION['email'] = $checkEmail;
+            exit();
+        } else {
+            header('Location: editingProfile.php?erreur=2');
+            exit();
+        }
+    }else {
+        header('Location: ../php_template/editingProfile.php?erreur=1');
+    }
 }
 function editAvatar()
 {
