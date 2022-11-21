@@ -20,14 +20,19 @@
         <right>
             <content>
                 <?php if (isset($_SESSION["username"])) {
-                    echo "<user>
-                <a href=\"http://localhost/HabitEnforcer/function/logout.php\">
-                <img src=\"https://cdn-icons-png.flaticon.com/512/992/992680.png\" meta=\"log out button\">
-                </a>
-                <a href=\"\">
-                <img src=\"https://cdn-icons-png.flaticon.com/512/1144/1144760.png\"meta=\"user button\">
-                </a>
-                </user>";
+                if (!empty($_SESSION["avatar"])) {
+             $image = "../Avatars/" . $_SESSION["username"] . ".png";
+                } else {
+                $image = "https://cdn-icons-png.flaticon.com/512/1144/1144760.png";
+                }
+             echo "<user>
+             <a href=\"../function/logout.php\">
+             <img src=\"https://cdn-icons-png.flaticon.com/512/992/992680.png\">
+             </a>
+             <a href=\"../php_template/home.php\">
+             <img src=\"$image\">
+             </a>
+             </user>";
                 } else {
                     echo "
                 <a href=\"http://localhost/HabitEnforcer/php_template/registerhtml.php\">
