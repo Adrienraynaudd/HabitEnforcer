@@ -8,7 +8,7 @@ Class Group
         $this -> dbFunction = new DBHandler;
         $this -> con = $this -> dbFunction->connect();
     }
-    public function add($name){
+    public function add($name){ //The function add a user with an email invitation with a link inside
         $userAdd = mysqli_real_escape_string($this -> dbFunction -> connect(), htmlspecialchars($name));
         if($userAdd !== ""){
             $user = $this -> dbFunction -> getFromDbByParam("Users","Name", $userAdd);
@@ -23,17 +23,17 @@ Class Group
             mysqli_close($this -> con);
         }
     }
-    public function delete($name){
+    public function delete($name){ // we delete user in group with DB in GroupId
         $iDGroup = $this -> dbFunction -> getFromDbByParam("users", "Name", $name);
         $updateUser = $this -> con->prepare("UPDATE users SET GroupID = NULL WHERE name = ?");
         $updateUser->execute(array($name));
         $groupMember = $this -> dbFunction -> getEveryThingByParam("Users", "GroupID", $iDGroup["GroupID"]); 
-        if($groupMember == array()){
+        if($groupMember == array()){ // if we don't have another person in group, we delete
             $this -> dbFunction -> deleteGroup($iDGroup["GroupID"]);
         }
         mysqli_close($this -> con);
     }
-    public function create($name){
+    public function create($name){ //We create group with name in DB
         $nameGroup = mysqli_real_escape_string($this -> dbFunction -> connect(), htmlspecialchars($name));
         if($nameGroup !== ""){
           $data = array(
