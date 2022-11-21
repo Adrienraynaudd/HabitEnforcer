@@ -35,7 +35,7 @@
             }
             echo("</form>");
             echo("
-            <form action='addGroup.php' method='POST'>
+            <form action='../function/addGroup.php' method='POST'>
             <input type='text' id='userAdd' placeholder='User add' name='userAdd' require>
             <input type='submit'> 
             </form>");
@@ -44,7 +44,7 @@
         }
     }else{ 
         echo("
-        <form action='createGroup.php' method='POST'>
+        <form action='../function/createGroup.php' method='POST'>
         <input type='text' id='groupName' placeholder='Group Name' name='groupName' require>
         <input type='submit'> 
         </form>");
