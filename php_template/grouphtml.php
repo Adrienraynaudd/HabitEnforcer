@@ -39,8 +39,17 @@
             <input type='text' id='userAdd' placeholder='User add' name='userAdd' require>
             <input type='submit'> 
             </form>");
-        }else{ // LA personne peut juste ce supp et voir les membres
-            echo("en cours");
+        }else{
+            $groupMember = $dbFunction -> getEveryThingByParam("Users", "GroupID", $iDGroup["GroupID"]);
+            echo("MEMBRES :<br>");
+            echo("<form action='../function/deleteGroup.php' method='POST'>");
+            foreach($groupMember as $member) {
+                echo("<div><p>".$member["Name"]."</p></div>");
+                if($member["Name"] == $_SESSION['username']){
+                    echo ("<button class='button' id='delete' name='delete' type='submit' value='".$member["Name"]."'>🗑️</button>");
+                }  
+            }
+            echo("</form>");
         }
     }else{ 
         echo("
