@@ -16,7 +16,7 @@
             <input class="login-register-input" type="text" placeholder="Entrer le nom d'utilisateur" name="username" required>
             <input class="login-register-input" type="password" placeholder="Entrer le mot de passe" name="password" required>
             <input class="login-register-input" type="submit" id='submit' value='LOGIN' class="login-button">
-            <input class="login-register-input" type="button" class="login-register-button" value="Register" onclick="window.location.href='registerhtml.php'" class="button">
+            <input class="login-register-input" type="button" class="login-register-button" value="Register" onclick="window.location.href='registerhtml.php'">
             <?php
             if (isset($_GET['erreur'])) {
                 $err = $_GET['erreur'];

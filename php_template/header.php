@@ -19,7 +19,7 @@
     <right>
         <content>
             <?php if (isset($_SESSION["username"])) {
-                $image = "../Avatars/" . $_SESSION["username"] . ".png";
+                $image = "../Avatars/" . $_SESSION["avatar"];
                 echo "<user>
                 <a href=\"/function/logout.php\">
                 <img src=\"https://cdn-icons-png.flaticon.com/512/992/992680.png\">

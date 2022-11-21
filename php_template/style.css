@@ -230,6 +230,7 @@ header middle content img {
 header right content user img {
   height: 35px;
   width: 35px;
+  border-radius: 10px;
 }
 
 header right content {
@@ -279,6 +280,91 @@ header right content a input:hover {
   transform: translateY(-2px);
 }
 header right content a input:active {
+  box-shadow: inset 0px 3px 7px #7c4fd1;
+  transform: translateY(2px);
+}
+
+home-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+home-container left-container {
+  height: auto;
+  width: 50%;
+}
+
+home-container right-container {
+  height: auto;
+  width: 50%;
+}
+
+home-container left-container header-left-container {
+  margin-top: 5%;
+  width: 100%;
+  height: 8%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+home-container left-container header-left-container p {
+  font-size: x-large;
+}
+
+home-container left-container content-left-container {
+  display: flex;
+  justify-content: center;
+}
+
+content-left-container task-display {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: auto;
+}
+
+content-left-container task-display task-card {
+  border: solid;
+  margin-top: 10%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+task-card task-card-header {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5%;
+}
+
+task-card task-card-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+task-card task-card-body input {
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  will-change: box-shadow, transform;
+  background: radial-gradient(100% 100% at 100% 0%, #432874 0%, #7c4fd1 100%);
+  box-shadow: 0px 2px 4px rgb(45 35 66 / 40%),
+    0px 7px 13px -3px rgb(45 35 66 / 30%),
+    inset 0px -3px 0px rgb(58 65 111 / 50%);
+  border-radius: 6px;
+  color: white;
+  height: 35px;
+  font-size: 18px;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+task-card task-card-body input:hover {
+  box-shadow: 0px 4px 8px rgb(45 35 66 / 40%),
+    0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #7c4fd1;
+  transform: translateY(-2px);
+}
+task-card task-card-body input:active {
   box-shadow: inset 0px 3px 7px #7c4fd1;
   transform: translateY(2px);
 }
