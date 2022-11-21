@@ -144,6 +144,54 @@ class DBHandler
 		$data = mysqli_real_escape_string($con,$data);
 		return $data;
 	}
+    public function getEmailwithName(string $table, string $name)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT Email FROM " . $table . " WHERE Name = '" . $name . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $resultQuerry = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $resultQuerry->fetch_assoc()['Email'];
+    }
+    public function getConfimeWithName(string $table, string $name)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT confirme FROM " . $table . " WHERE Name = '" . $name . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $resultQuerry = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $resultQuerry->fetch_assoc()['confirme'];
+    }
+    public function getAvatarwithName(string $table, string $name)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT avatar FROM " . $table . " WHERE Name = '" . $name . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $resultQuerry = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $resultQuerry->fetch_assoc()['avatar'];
+    }
     // public function dbTasksPush($taskName, $taskDescription = NULL, $taskDifficulty, $taskRecurrence, $taskCategory)
     // {
     //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);

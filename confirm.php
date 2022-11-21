@@ -14,6 +14,7 @@ if (isset($_GET['username']) && isset($_GET['key']) AND !empty($_GET['username']
             $updateUser = $con->prepare("UPDATE users SET confirme = 1 WHERE name = ? AND confirmkey = ?");
             $updateUser->execute(array($username, $key));
             header('Location: loginhtml.php');
+            exit();
         } else {
             echo "Votre compte a déjà été confirmé !";
         }

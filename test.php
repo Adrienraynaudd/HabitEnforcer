@@ -13,12 +13,17 @@
     if(isset($_SESSION['username']) && $_SESSION['username']!=""){
     	// afficher un message
     	echo "Welcome ".$_SESSION['username'];
+        if(!empty($_SESSION['avatar'])){
+            echo '<img src="Avatars/'.$_SESSION['avatar'].'" alt="Image Perso" width="150" height="150">';
+        }
+
     }
     else{
     	header('Location: loginhtml.php');
         exit();
     }
  ?>
+ <input type="button" value="profileEditing" onclick="window.location.href='editingProfile.php'">
  <input type="button" value="Logout" onclick="window.location.href='logout.php'">
  </div>
  </body>
