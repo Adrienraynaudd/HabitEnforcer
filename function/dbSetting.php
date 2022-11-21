@@ -11,7 +11,7 @@ class DBHandler
     {
         $this->name = 'habitenforcer';
         $this->user = 'root';
-        $this->password = 'root';
+        $this->password = '';
         $this->host = 'localhost';
     }
 

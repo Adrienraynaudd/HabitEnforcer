@@ -8,7 +8,6 @@
 
 <body>
     <?php
-    session_start();
     if (!isset($_SESSION['username']) && $_SESSION['username'] != "") {
         header('Location: ../php_template/loginhtml.php');
         exit();
