@@ -3,7 +3,7 @@ body {
   background-color: #fdf6ec;
 }
 .login-register-container {
-  height: 100vh;
+  height: 90%;
   background-image: url("background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -367,4 +367,30 @@ task-card task-card-body input:hover {
 task-card task-card-body input:active {
   box-shadow: inset 0px 3px 7px #7c4fd1;
   transform: translateY(2px);
+}
+
+right-container {
+  display: flex;
+  justify-content: center;
+}
+
+right-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.GroupManager {
+  margin-top: 22%;
+  width: 35%;
+  height: fit-content;
+  text-align: center;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #432874;
+}
+
+.group-user {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }

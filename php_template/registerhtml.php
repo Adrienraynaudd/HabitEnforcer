@@ -1,3 +1,8 @@
+<?php
+session_start();
+include "header.php";
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -42,6 +47,7 @@
 				}
 				?>
 			</form>
+
 		</section>
 	</div>
 </body>

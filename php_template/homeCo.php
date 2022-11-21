@@ -49,6 +49,7 @@
         </content-left-container>
     </left-container>
     <right-container>
+        <?php include "grouphtml.php" ?>
     </right-container>
 </home-container>
 
