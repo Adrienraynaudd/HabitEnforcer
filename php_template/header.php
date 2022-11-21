@@ -19,7 +19,7 @@
         </middle>
         <right>
             <content>
-                <?php if ($_SESSION["username"] != NULL) {
+                <?php if (isset($_SESSION["username"])) {
                     echo "<user>
                 <a href=\"http://localhost:8888/function/logout.php\">
                 <img src=\"https://cdn-icons-png.flaticon.com/512/992/992680.png\" meta=\"log out button\">

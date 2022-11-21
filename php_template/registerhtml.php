@@ -8,24 +8,25 @@
 </head>
 
 <body>
-	<div class="register">
+	<?php include "header.php" ?>
+	<div class="login-register-container">
 		<section>
-			<form action="register.php" method="post" autocomplete="off">
+			<form action="register.php" method="post" autocomplete="off" class="login-register-form">
 				<h1>Register</h1>
 				<label for="username">
 					<i class="user"></i>
 				</label>
-				<input type="text" name="username" placeholder="Username" id="username" required>
+				<input class="login-register-input" type="text" name="username" placeholder="Username" id="username" required>
 				<label for="password">
 					<i class="lock"></i>
 				</label>
-				<input type="password" name="password" placeholder="Password" id="password" required>
+				<input class="login-register-input" type="password" name="password" placeholder="Password" id="password" required>
 				<label for="email">
 					<i class="mail"></i>
 				</label>
-				<input type="email" name="email" placeholder="Email" id="email" required>
-				<input type="submit" value="Register" class="button">
-				<input type="button" value="Login" onclick="window.location.href='loginhtml.php'" class="button">
+				<input class="login-register-input" type="email" name="email" placeholder="Email" id="email" required>
+				<input class="login-register-input" type="submit" value="Register" class="button">
+				<input class="login-register-input" type="button" value="Login" onclick="window.location.href='loginhtml.php'" class="button">
 				<?php
 				if (isset($_GET['erreur'])) {
 					$err = $_GET['erreur'];

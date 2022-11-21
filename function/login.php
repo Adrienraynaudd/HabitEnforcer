@@ -16,7 +16,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $_SESSION['username'] = $username;
         $routine = new Routine;
         $routine->logRoutine();
-        header('Location: ../test.php');
+        header('Location: ../php_template/home.php');
       } else {
         mysqli_close($con); // fermer la connexion
         header('Location: ../php_template/loginhtml.php?erreur=1'); // utilisateur ou mot de passe incorrect

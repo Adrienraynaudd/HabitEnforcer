@@ -1,7 +1,7 @@
 <?php
 require "../function/dbSetting.php";
 session_start();
-if ($_SESSION["username"] == NULL) {
+if (!isset($_SESSION["username"])) {
     header('Location: home.php');
 }
 date_default_timezone_set('Europe/Paris');

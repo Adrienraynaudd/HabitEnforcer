@@ -1,0 +1,2 @@
+ErrorDocument 404 "/php_template/home.php"
+ErrorDocument 500 "/php_template/home.php"

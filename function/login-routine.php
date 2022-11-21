@@ -24,6 +24,7 @@ class Routine extends DBHandler
             } else if ($task["Recurrence"] == "weekly") {
                 if ($this->isDifferentDay($task["LimitDate"])) {
                     $this->updateTaskDate($task["ID"], 6);
+                    $this->updateBooleanState("Tasks", "Complete", $task["ID"], 0);
                 }
             }
         }
@@ -40,8 +41,8 @@ class Routine extends DBHandler
 
     public function logRoutine()
     {
-        $this->userLoginDateUpdate($_SESSION["userID"]);
         $this->canCreateTask();
         $this->setTaskDate();
+        $this->userLoginDateUpdate($_SESSION["userID"]);
     }
 }
