@@ -12,7 +12,7 @@
         </left>
         <middle>
             <content>
-                <a href="/php_template/home.php">
+                <a href="http://localhost/HabitEnforcer/php_template/home.php">
                     <img src="https://cdn-icons-png.flaticon.com/512/4685/4685215.png">
                 </a>
             </content>
@@ -21,7 +21,7 @@
             <content>
                 <?php if (isset($_SESSION["username"])) {
                     echo "<user>
-                <a href=\"http://localhost:8888/function/logout.php\">
+                <a href=\"http://localhost/HabitEnforcer/function/logout.php\">
                 <img src=\"https://cdn-icons-png.flaticon.com/512/992/992680.png\" meta=\"log out button\">
                 </a>
                 <a href=\"\">
@@ -30,10 +30,10 @@
                 </user>";
                 } else {
                     echo "
-                <a href=\"/php_template/registerhtml.php\">
+                <a href=\"http://localhost/HabitEnforcer/php_template/registerhtml.php\">
                 <input type=\"button\" value=\"Sign up\">
                 </a>
-                <a href=\"/php_template/loginhtml.php\">
+                <a href=\"http://localhost/HabitEnforcer/php_template/loginhtml.php\">
                 <input type=\"button\" value=\"Login\">
                 </a>";
                 } ?>
@@ -41,17 +41,17 @@
         </right>
     </header>
     <burger-menu id="burger-menu">
-        <a href="/php_template/home.php">
+        <a href="http://localhost/HabitEnforcer/php_template/home.php">
             <div id="burger-link">
                 <p>Home</p>
             </div>
         </a>
-        <a href="/php_template/tasklist.php">
+        <a href="http://localhost/HabitEnforcer/php_template/tasklist.php">
             <div id="burger-link">
                 <p>Tasks</p>
             </div>
         </a>
-        <a href="/php_template/groupes.php">
+        <a href="http://localhost/HabitEnforcer/php_template/grouphtml.php">
             <div id="burger-link">
                 <p>Mon groupe</p>
             </div>

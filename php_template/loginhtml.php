@@ -21,9 +21,9 @@
             if (isset($_GET['erreur'])) {
                 $err = $_GET['erreur'];
                 if ($err == 1 || $err == 2) {
-                    echo "<p style='color:red'>Utilisateur ou mot de passe incorrect</p>";
+                    echo "<p style='color:white'>User or password are incorecte </p>";
                 } else if ($err == 3) {
-                    echo "<p style='color:red'>Veuillez confirmer votre compte</p>";
+                    echo "<p style='color:white'>Please confirm your account</p>";
                 }
             }
             ?>

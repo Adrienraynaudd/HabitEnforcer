@@ -19,7 +19,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         header('Location: ../php_template/home.php');
       } else {
         mysqli_close($con); // fermer la connexion
-        header('Location: ../php_template/loginhtml.php?erreur=1'); // utilisateur ou mot de passe incorrect
+        header('Location: HabitEnforcer/php_template/loginhtml.php?erreur=1'); // utilisateur ou mot de passe incorrect
       }
     } else {
       mysqli_close($con); // fermer la connexion

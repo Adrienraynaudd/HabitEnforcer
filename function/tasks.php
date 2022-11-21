@@ -19,7 +19,7 @@ if (isset($_POST["task_name"]) && isset($_POST["task_difficulty"]) && isset($_PO
     $taskRecurrence = $_POST["task_recurrence"];
     $newTask = new Task($db->IdGenrerate(), $taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $categoryID, $_SESSION["userID"]);
     $newTask->dbTaskPush();
-    header('Location: http://localhost:8888/php_template/tasklist.php');
+    header('Location: ../php_template/tasklist.php');
 }
 
 
