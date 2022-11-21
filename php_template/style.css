@@ -3,7 +3,7 @@ body {
   background-color: #fdf6ec;
 }
 .login-register-container {
-  height: 90%;
+  height: 92.4%;
   background-image: url("background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -393,4 +393,15 @@ right-container form {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+#chat {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+#paul {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }

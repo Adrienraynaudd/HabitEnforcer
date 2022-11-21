@@ -5,5 +5,4 @@ if(isset($_POST['userAdd'])) {
    $group = new group;
    $group -> add($_POST['userAdd']);
 }
-header('Location: ../php_template/grouphtml.php'); //redirection in home 
-?>
+header('Location: ../php_template/home.php'); //redirection in home 

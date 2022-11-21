@@ -19,8 +19,8 @@
             <input class="login-register-input" type="button" class="login-register-button" value="Register" onclick="window.location.href='registerhtml.php'">
             <?php
             if (isset($_GET['erreur'])) {
-                $err = $_GET['erreur'];
-                if ($err == 1 || $err == 2) {
+                $err = $_GET['erreur']; // Get the error code
+                if ($err == 1 || $err == 2) { // If the error code is 1 or 2, display the error message
                     echo "<p style='color:white'>User or password are incorecte </p>";
                 } else if ($err == 3) {
                     echo "<p style='color:white'>Please confirm your account</p>";

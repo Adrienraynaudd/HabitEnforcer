@@ -5,5 +5,4 @@ if(isset($_POST['delete'])) {
    $group = new group;
    $group -> delete($_POST['delete']);
 }
-header('Location: ../php_template/grouphtml.php'); 
-?>
+header('Location: ../php_template/home.php');

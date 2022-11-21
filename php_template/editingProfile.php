@@ -65,10 +65,22 @@ function editProfil($newUsername, $newEmail)
     $con = $db->connect();
     $checkUsername = $db->SecurityCheck($con, $newUsername);
     $checkEmail = $db->SecurityCheck($con, $newEmail);
+    if ($checkUsername == $_SESSION['username']){
+        if (filter_var($checkEmail, FILTER_VALIDATE_EMAIL)) {
+            $req1 = $con->prepare("UPDATE users SET name = ?, email = ? WHERE name = ?");
+            $req1->execute(array($checkUsername, $checkEmail, $_SESSION['username']));
+            $_SESSION['username'] = $checkUsername;
+            $_SESSION['email'] = $checkEmail;
+            exit();
+        } else {
+            header('Location: editingProfile.php?erreur=2');
+            exit();
+        }
+    }
     $requser = $con->prepare("SELECT * FROM users WHERE name = ?");
     $requser-> execute(array($checkUsername));
     $userexist = $requser->fetch();
-    if ($userexist == null){
+    if ($userexist == null) {
         if (filter_var($checkEmail, FILTER_VALIDATE_EMAIL)) {
             $req = $con->prepare("UPDATE users SET name = ?, email = ? WHERE name = ?");
             $req->execute(array($checkUsername, $checkEmail, $_SESSION['username']));
