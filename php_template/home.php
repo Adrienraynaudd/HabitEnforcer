@@ -5,25 +5,14 @@
  <!-- importer le fichier de style -->
  <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
  </head>
- <body>
- <?php 
- session_start();
- include "header.php" ?>
- <div id="content">
- <!-- tester si l'utilisateur est connecté -->
  <?php
-    if(isset($_SESSION['username']) && $_SESSION['username']!=""){
-    	// afficher un message
-    	echo "Welcome ".$_SESSION['username'];
+    session_start();
+    include "header.php";
+    if (isset($_SESSION['username']) && $_SESSION['username']!=""){
+    	include "homeCo.php";
     }
     else{
-    	header('Location: loginhtml.php');
-        exit();
+        include "homeNco.php";
     }
- ?>
- <br /><br />
- <input type="button" value="profileEditing" onclick="window.location.href='editingProfile.php'"><br /><br />
- <input type="button" value="Logout" onclick="window.location.href='../function/logout.php'">
- </div>
- </body>
+    ?>
 </html>

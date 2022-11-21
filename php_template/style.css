@@ -4,7 +4,7 @@ margin: 0;
 background-color: #fdf6ec;
 }
 .login-register-container {
-height: 90%;
+height: 92.4%;
 background-image: url("background.jpeg");
 background-repeat: no-repeat;
 background-size: cover;
@@ -281,4 +281,14 @@ transform: translateY(-2px);
 header right content a input:active {
 box-shadow: inset 0px 3px 7px #7c4fd1;
 transform: translateY(2px);
+}
+#chat{
+  position: relative;
+  left: 0;
+  top: 0;
+}
+#paul{
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
