@@ -13,7 +13,8 @@ if (isset($_GET['username']) && isset($_GET['key']) AND !empty($_GET['username']
         if ($user['confirme'] == 0) {
             $updateUser = $con->prepare("UPDATE users SET confirme = 1 WHERE name = ? AND confirmkey = ?");
             $updateUser->execute(array($username, $key));
-            header('Location: HabitEnforcer/php_template/loginhtml.php');
+            header('Location: ../php_template/loginhtml.php');
+            exit();
         }elseif ($user['confirme'] == 3){ // ICI pq je ne rentre pas !
             if(isset($_GET['Host']) AND !empty($_GET['Host']))
             {
@@ -23,11 +24,9 @@ if (isset($_GET['username']) && isset($_GET['key']) AND !empty($_GET['username']
                 /*$updateUser = $con->prepare("UPDATE users SET confirme = 1 WHERE name = ? AND confirmkey = ?");
                 $updateUser->execute(array($username, $key));*/
                 //header('Location: grouphtml.php');
-            }else{
-                echo "Erreur";
             }
-        }else {
-            echo "Votre compte ou invitation a déjà été confirmé !";
+        } else {
+            echo "Votre compte a déjà été confirmé !";
         }
     }else {
         echo "L'utilisateur n'existe pas !";
@@ -35,3 +34,4 @@ if (isset($_GET['username']) && isset($_GET['key']) AND !empty($_GET['username']
 }else {
     echo "Erreur";
 }
+?>

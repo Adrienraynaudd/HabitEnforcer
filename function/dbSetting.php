@@ -11,7 +11,7 @@ class DBHandler
     {
         $this->name = 'habitenforcer';
         $this->user = 'root';
-        $this->password = '';
+        $this->password = 'root';
         $this->host = 'localhost';
     }
 
@@ -151,8 +151,33 @@ class DBHandler
         mysqli_close($con);
         return json_encode($answerArray);
     }
-
+    public function getNameByAuthor($table, $authorID): array
+    {
+        $con = $this->connect();
+        $answerArray = array();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT name FROM " . $table . " WHERE CreatorID = '" . $authorID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $answerArray[] = $row;
+            }
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $answerArray;
+    }
     public function IdGenrerate()
+    {
+        $id = uniqid();
+        $id = str_replace(".", "", $id);
+        return $id;
+    }
+    public function taskComplete($taskID)
     {
         $con = $this->connect();
         if ($con == false) {
@@ -192,10 +217,20 @@ class DBHandler
 
     public function userLoginDateUpdate($userID)
     {
-        $id = uniqid();
-        $id = str_replace(".", "", $id);
-        return $id;
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $date = date("Y-m-d H:i:s", time());
+        $sql = "UPDATE Users SET logdate = '" . $date . "' WHERE ID = '" . $userID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
     }
+
     public function getPasswordWithName(string $table, string $name)
     {
         $con = $this->connect();
@@ -203,7 +238,6 @@ class DBHandler
             die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
         }
         $date = date("Y-m-d H:i:s", time());
-        $sql = "UPDATE Users SET logdate = '" . $date . "' WHERE ID = '" . $userID . "'";
         $sql = "SELECT password FROM " . $table . " WHERE Name = '" . $name . "'";
         if ($request = $con->prepare($sql)) {
             $request->execute();
@@ -269,12 +303,82 @@ class DBHandler
         $data = mysqli_real_escape_string($con, $data);
         return $data;
     }
-}
-function SecurityCheck($con, $data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    $data = mysqli_real_escape_string($con, $data);
-    return $data;
+    public function getEmailwithName(string $table, string $name)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT Email FROM " . $table . " WHERE Name = '" . $name . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $resultQuerry = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $resultQuerry->fetch_assoc()['Email'];
+    }
+    public function getConfimeWithName(string $table, string $name)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT confirme FROM " . $table . " WHERE Name = '" . $name . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $resultQuerry = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $resultQuerry->fetch_assoc()['confirme'];
+    }
+    public function getAvatarwithName(string $table, string $name)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT avatar FROM " . $table . " WHERE Name = '" . $name . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $resultQuerry = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $resultQuerry->fetch_assoc()['avatar'];
+    }
+
+    public function updateScore($table, $score, $ID)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "UPDATE " . $table . " SET Score = " . $score . " WHERE ID = '" . $ID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+    }
+
+    public function deleteByParam($table, $param, $condition)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "DELETE FROM " . $table . " WHERE '" . $param . "' = '" . $condition . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+    }
 }

@@ -17,12 +17,10 @@ $newUsers->dbUserPush();
 
 class Users
 {
-	// TODO ajout groupID
 	public  $id;
 	public $name;
 	public $password;
 	public $email;
-	public $groupeID;
 	public $key;
 	public $db;
 	function __construct($id, $name, $password, $email, $key)

@@ -11,7 +11,7 @@
 	<?php include "header.php" ?>
 	<div class="login-register-container">
 		<section>
-			<form action="register.php" method="post" autocomplete="off" class="login-register-form">
+			<form action="../function/register.php" method="post" autocomplete="off" class="login-register-form">
 				<h1>Register</h1>
 				<label for="username">
 					<i class="user"></i>
