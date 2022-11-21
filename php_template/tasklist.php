@@ -2,7 +2,7 @@
 require "../function/dbSetting.php";
 session_start();
 if ($_SESSION["username"] == NULL) {
-    header('Location: home.php');
+    header('Location: ../php_template/home.php');
 }
 date_default_timezone_set('Europe/Paris');
 $dbFunction = new DBHandler;

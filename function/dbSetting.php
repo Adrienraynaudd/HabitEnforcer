@@ -11,7 +11,7 @@ class DBHandler
     {
         $this->name = 'habitenforcer';
         $this->user = 'root';
-        $this->password = 'root';
+        $this->password = '';
         $this->host = 'localhost';
     }
 
@@ -93,6 +93,21 @@ class DBHandler
         mysqli_close($con);
         return $answerArray;
     }
+    public function getMembreGroupFromIDGroup(string $idGroup){
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT Name FROM Users WHERE GroupID = '" . $idGroup . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $result->fetch_assoc();
+    }
 
     public function verifyByAuthor(string $table, string $authorID, string $param, string $toverify): bool
     {
@@ -136,28 +151,7 @@ class DBHandler
         return json_encode($answerArray);
     }
 
-    public function getNameByAuthor($table, $authorID): array
-    {
-        $con = $this->connect();
-        $answerArray = array();
-        if ($con == false) {
-            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
-        }
-        $sql = "SELECT name FROM " . $table . " WHERE CreatorID = '" . $authorID . "'";
-        if ($request = $con->prepare($sql)) {
-            $request->execute();
-            $result = $request->get_result();
-            while ($row = mysqli_fetch_assoc($result)) {
-                $answerArray[] = $row;
-            }
-        } else {
-            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
-        }
-        mysqli_close($con);
-        return $answerArray;
-    }
-
-    public function taskComplete($taskID)
+    public function IdGenrerate()
     {
         $con = $this->connect();
         if ($con == false) {
@@ -197,18 +191,27 @@ class DBHandler
 
     public function userLoginDateUpdate($userID)
     {
+        $id = uniqid();
+        $id = str_replace(".", "", $id);
+        return $id;
+    }
+    public function getPasswordWithName(string $table, string $name)
+    {
         $con = $this->connect();
         if ($con == false) {
             die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
         }
         $date = date("Y-m-d H:i:s", time());
         $sql = "UPDATE Users SET logdate = '" . $date . "' WHERE ID = '" . $userID . "'";
+        $sql = "SELECT password FROM " . $table . " WHERE Name = '" . $name . "'";
         if ($request = $con->prepare($sql)) {
             $request->execute();
+            $resultQuerry = $request->get_result();
         } else {
-            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
         }
         mysqli_close($con);
+        return $resultQuerry->fetch_assoc()['password'];
     }
 
     public function getLastRowFromTable($table, $toSearch, $condition)
@@ -227,28 +230,18 @@ class DBHandler
         mysqli_close($con);
         return end($result->fetch_assoc());
     }
-
-    public function IdGenrerate()
-    {
-        $id = uniqid();
-        $id = str_replace(".", "", $id);
-        return $id;
-    }
-    public function getPasswordWithName(string $table, string $name)
-    {
+    public function update(array $dataUpdate, string $table, string $condition){ //$Condition = ("ID = 5", Score = 5")
         $con = $this->connect();
         if ($con == false) {
             die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
         }
-        $sql = "SELECT password FROM " . $table . " WHERE Name = '" . $name . "'";
+        $sql = "UPDATE ".$table." set "."GroupID = ".$dataUpdate["GroupID"]." WHERE ".$condition; //PRoblème avec ma gestion de la table
         if ($request = $con->prepare($sql)) {
             $request->execute();
-            $resultQuerry = $request->get_result();
         } else {
             die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
         }
         mysqli_close($con);
-        return $resultQuerry->fetch_assoc()['password'];
     }
     public function updateTaskDate($taskID, $span)
     {
@@ -275,3 +268,11 @@ class DBHandler
         return $data;
     }
 }
+    function SecurityCheck($con,$data)
+	{
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		$data = mysqli_real_escape_string($con,$data);
+		return $data;
+	}
