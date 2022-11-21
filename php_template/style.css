@@ -282,3 +282,13 @@ header right content a input:active {
 box-shadow: inset 0px 3px 7px #7c4fd1;
 transform: translateY(2px);
 }
+
+.GroupManager {
+  position: absolute;
+  background-color: beige;
+  width:35%;
+  right: 1em;
+  height: 50%;
+  text-align: center;
+  vertical-align: middle;
+}

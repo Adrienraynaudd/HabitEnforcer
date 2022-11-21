@@ -98,7 +98,7 @@ class DBHandler
         if ($con == false) {
             die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
         }
-        $sql = "SELECT Name FROM Users WHERE GroupID = '" . $idGroup . "'";
+        $sql = "SELECT * FROM Users WHERE GroupID = '" . $idGroup . "'";
         if ($request = $con->prepare($sql)) {
             $request->execute();
             $result = $request->get_result();

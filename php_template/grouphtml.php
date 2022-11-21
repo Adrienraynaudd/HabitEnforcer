@@ -26,12 +26,12 @@
     if($iDGroup["GroupID"] !== null){
         $iDCreator = $dbFunction -> getFromDbByParam("Groups","ID", $iDGroup["GroupID"]);
         if($iD_User === $iDCreator["GroupCreator"]){ // C'est le créateur du Groupe donc ADD et supp disponible
-            $Member = $dbFunction -> getMembreGroupFromIDGroup($iDGroup["GroupID"]);
+            $groupMember = $dbFunction -> getEveryThingByParam("Users", "GroupID", $iDGroup["GroupID"]);
             echo("MEMBRES :<br>");
-            echo("<form action='deleteGroup.php' method='POST'>");
-            foreach ($Member as $value) { //CHANGEMENT l'image par un button avec le smiley corbeille
-                echo "$value <br>   ";
-                echo ("<input class='corbeille' type='image' src='corbeille.png' value='$value' id='delete' name='delete'>");
+            echo("<form action='../function/deleteGroup.php' method='POST'>");
+            foreach($groupMember as $member) {
+                echo("<div><p>".$member["Name"]."</p></div>");
+                echo ("<button class='button' id='delete' name='delete' type='submit' value='".$member["Name"]."'>🗑️</button>");
             }
             echo("</form>");
             echo("

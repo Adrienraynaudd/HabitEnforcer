@@ -14,23 +14,27 @@ class Confirm {
             $requser = $con->prepare("SELECT * FROM users WHERE name = ? AND confirmkey = ?");
             $requser-> execute(array($username, $key));
             $userexist = $requser->fetch();
+            $userAdd = $db -> getConfimeWithName("users", $username);
             if ($userexist != null) {
                 $user = $requser->fetch();
                 if ($user['confirme'] == 0) {
+                    if ($userAdd == 3){
+                        if(isset($_GET['Host']) AND !empty($_GET['Host']))
+                        {
+                            $Host = $db -> getFromDbByParam("users","Name",$_GET['Host']);
+                            $updateUser = $con->prepare("UPDATE users SET GroupID = ? WHERE name = ? AND confirmkey = ?");
+                            $updateUser->execute(array($Host["GroupID"], $username, $key));
+                            $updateUser = $con->prepare("UPDATE users SET confirme = 1 WHERE name = ? AND confirmkey = ?");
+                            $updateUser->execute(array($username, $key));
+                            header('Location: ../php_template/loginhtml.php');
+                            exit();
+                        }
+                    }
                     $updateUser = $con->prepare("UPDATE users SET confirme = 1 WHERE name = ? AND confirmkey = ?");
                     $updateUser->execute(array($username, $key));
                     header('Location: ../php_template/loginhtml.php');
                     exit();
-                }elseif ($user['confirme'] == 3){ // ICI pq je ne rentre pas !
-                    if(isset($_GET['Host']) AND !empty($_GET['Host']))
-                    {
-                        $Host = $db -> getFromDbByParam("users","Name",$_GET['Host']);
-                        $updateUser = $con->prepare("UPDATE users SET GroupID = ".$Host["GroupID"]." WHERE name = ? AND confirmkey = ?");
-                        $updateUser->execute(array($username, $key));
-                        /*$updateUser = $con->prepare("UPDATE users SET confirme = 1 WHERE name = ? AND confirmkey = ?");
-                        $updateUser->execute(array($username, $key));*/
-                        //header('Location: grouphtml.php');
-                    }
+                
                 } else {
                     echo "Votre compte a déjà été confirmé !";
                 }

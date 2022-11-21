@@ -15,7 +15,7 @@ if(isset($_POST['userAdd'])) {
         $message = "Hello ".$user["Name"]." ! \n".$_SESSION['username']." aimerait t'inviter dans son Groupe Habit Enforcer\nMerci de cliquer sur le lien suivant pour accepter :".$link;
         $headers = "From: habitenforcer66@gmail.com";
         mail($to,$subject,$message,$headers);
-        echo "Mail Sent.";
+        header('Location: ../php_template/grouphtml.php');
     }
 }
 ?>
