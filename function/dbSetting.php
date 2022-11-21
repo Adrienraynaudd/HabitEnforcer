@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Paris');
 class DBHandler
 {
     private $name;
@@ -55,13 +56,49 @@ class DBHandler
         return $resultQuerry->fetch_assoc()['ID'];
     }
 
-    public function getFromDbByParam(string $table, string $param, string $condition): array|null
+    public function getFromDbByParam(string $table, string $param, string $condition)
     {
         $con = $this->connect();
         if ($con == false) {
             die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
         }
         $sql = "SELECT * FROM " . $table . " WHERE " . $param . " = '" . $condition . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $result->fetch_assoc();
+    }
+
+    public function getEveryThingByParam(string $table, string $param, string $condition)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $answerArray = [];
+        $sql = "SELECT * FROM " . $table . " WHERE " . $param . " = '" . $condition . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $answerArray[] = $row;
+            }
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $answerArray;
+    }
+    public function getMembreGroupFromIDGroup(string $idGroup){
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT Name FROM Users WHERE GroupID = '" . $idGroup . "'";
         if ($request = $con->prepare($sql)) {
             $request->execute();
             $result = $request->get_result();
@@ -113,8 +150,51 @@ class DBHandler
         mysqli_close($con);
         return json_encode($answerArray);
     }
-
     public function IdGenrerate()
+    {
+        $id = uniqid();
+        $id = str_replace(".", "", $id);
+        return $id;
+    }
+    public function taskComplete($taskID)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT complete FROM Tasks WHERE ID = '" . $taskID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return $result->fetch_assoc()["complete"];
+    }
+    /**
+     * update the boolean state of a value in a table
+     * @param table $specify the table you want the function to affect
+     * @param toChange $specify the value to change
+     * @param ID $the ID of the object you want to change
+     * @param state $0 == FALSE || 1 == TRUE
+     */
+    public function updateBooleanState($table, $toChange, $ID, $state)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "UPDATE " . $table . " SET " . $toChange . " = " . $state . " WHERE ID = '" . $ID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+    }
+
+    public function userLoginDateUpdate($userID)
     {
         $id = uniqid();
         $id = str_replace(".", "", $id);
@@ -126,6 +206,8 @@ class DBHandler
         if ($con == false) {
             die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
         }
+        $date = date("Y-m-d H:i:s", time());
+        $sql = "UPDATE Users SET logdate = '" . $date . "' WHERE ID = '" . $userID . "'";
         $sql = "SELECT password FROM " . $table . " WHERE Name = '" . $name . "'";
         if ($request = $con->prepare($sql)) {
             $request->execute();
@@ -136,14 +218,60 @@ class DBHandler
         mysqli_close($con);
         return $resultQuerry->fetch_assoc()['password'];
     }
-    function SecurityCheck($con,$data)
-	{
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		$data = mysqli_real_escape_string($con,$data);
-		return $data;
-	}
+
+    public function getLastRowFromTable($table, $toSearch, $condition)
+    {
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "SELECT " . $toSearch . " FROM " . $table . " WHERE CreatorID = '" . $condition . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+            $result = $request->get_result();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+        return end($result->fetch_assoc());
+    }
+    public function update(array $dataUpdate, string $table, string $condition){ //$Condition = ("ID = 5", Score = 5")
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $sql = "UPDATE ".$table." set "."GroupID = ".$dataUpdate["GroupID"]." WHERE ".$condition; //PRoblème avec ma gestion de la table
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+        } else {
+            die("Can't prepare the sql request properly : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+    }
+    public function updateTaskDate($taskID, $span)
+    {
+        $toadd = $span * 86400;
+        $con = $this->connect();
+        if ($con == false) {
+            die("ERROR : couldn't connect properly to database : " . mysqli_connect_error());
+        }
+        $date = date("Y-m-d 00:00:00", time() + $toadd);
+        $sql = "UPDATE Tasks SET limitDate = '" . $date . "' WHERE ID = '" . $taskID . "'";
+        if ($request = $con->prepare($sql)) {
+            $request->execute();
+        } else {
+            die("there has been an error in the process of : " . $sql . " " . mysqli_error($con));
+        }
+        mysqli_close($con);
+    }
+    function SecurityCheck($con, $data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        $data = mysqli_real_escape_string($con, $data);
+        return $data;
+    }
     public function getEmailwithName(string $table, string $name)
     {
         $con = $this->connect();
@@ -192,48 +320,4 @@ class DBHandler
         mysqli_close($con);
         return $resultQuerry->fetch_assoc()['avatar'];
     }
-    // public function dbTasksPush($taskName, $taskDescription = NULL, $taskDifficulty, $taskRecurrence, $taskCategory)
-    // {
-    //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);
-    //     if ($con == false) {
-    //         die("ERREUR : Can't connect to database : " . mysqli_connect_error());
-    //     }
-    //     if ($stmt = $con->prepare('INSERT INTO Tasks (TaskID, Name, Description, Difficulty, TimeSpan, Recurrence, CreationDate, CategoryID) VALUES (?,?,?,?,?,?,?,?)')) {
-    //         $taskID = IdGenrerate();
-    //         $stmt->bind_param('sssisss', $taskID, $taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $taskCategory);
-    //         $stmt->execute();
-    //         echo 'You have successfully created a new task !';
-    //     } else {
-    //         echo 'could not prepare statement !';
-    //     }
-    //     $stmt->close();
-    // }
-    // public function dbTasksGet()
-    // {
-    // }
-    // public function dbCategoryPush($categoryID, $categoryName, $categoryColor, $creatorID)
-    // {
-    //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);
-    //     if ($con == false) {
-    //         die("ERREUR : Can't connect to database : " . mysqli_connect_error());
-    //     }
-    //     if ($stmt = $con->prepare('INSERT INTO TasksCategories (ID, Name, Color, CreatorID) VALUES (?,?,?,?')) {
-    //         $stmt->bind_param('ssss', $categoryID, $categoryName, $categoryColor, $creatorID);
-    //         $stmt->execute();
-    //         echo 'You have successfully created a new category !';
-    //     } else {
-    //         echo 'could not prepare statement !';
-    //     }
-    //     $stmt->close();
-    // }
-    // public function dbCategoryIDGet($categoryName, $authorID): string
-    // {
-    //     $con = mysqli_connect($this->dbserver, $this->dbname, $this->dbpassword, $this->dbname);
-    //     if ($con == false) {
-    //         die("ERREUR : Can't connect to database : " . mysqli_connect_error());
-    //     }
-    //     $var = $con->query('SELECT ID FROM TasksCategories WHERE Name = ' . $categoryName . ' AND CreatorID = ' . $authorID);
-    //     $categoryID = $var->fetch_array();
-    //     return $categoryID;
-    // }
 }

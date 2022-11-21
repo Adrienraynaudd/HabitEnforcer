@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'dbSetting.php';
+require_once '../function/dbSetting.php';
 $db = new DBHandler;
 $con = $db->connect();
 if (isset($_SESSION['username']) && $_SESSION['username'] != "") {
@@ -24,7 +24,7 @@ if (isset($_SESSION['username']) && $_SESSION['username'] != "") {
                     <input type="text" name="newEmail" placeholder="Email" value="<?php echo $_SESSION['email']; ?>" /><br /><br />
                     <label>Profil picture :</label>
                     <input type="file" name="avatar" /><br /><br />
-                    <input type="button" value="home" onclick="window.location.href='test.php'">
+                    <input type="button" value="home" onclick="window.location.href='../php_template/home.php'">
                     <input type = "submit" name="Edit" value="Edit" />
                     <?php
                     if(isset($_GET['erreur'])){
@@ -50,7 +50,7 @@ if (isset($_POST['newUsername']) AND !empty($_POST['newUsername']) AND isset($_P
 }
 exit();
 } else {
-    header('Location: loginhtml.php');
+    header('../php_template/loginhtml.php');
     exit();
 }
 ?>
@@ -69,7 +69,7 @@ function editProfil($newUsername, $newEmail)
 }
 function editAvatar()
 {
-    require_once 'dbSetting.php';
+    require_once '../function/dbSetting.php';
     $db = new DBHandler;
     $con = $db->connect();
     $sizeMax = 2097152;
@@ -79,7 +79,7 @@ function editAvatar()
         $extensionUpload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
         if (in_array($extensionUpload, $extensionsValides))
         {
-            $chemin = "Avatars/" . $_SESSION['username'] . "." . $extensionUpload;
+            $chemin = "../Avatars/" . $_SESSION['username'] . "." . $extensionUpload;
             $resultat = move_uploaded_file($_FILES['avatar']['tmp_name'], $chemin);
             if ($resultat)
             {

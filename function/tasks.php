@@ -1,21 +1,25 @@
 <?php
 require "dbSetting.php";
+session_start();
+date_default_timezone_set('Europe/Paris');
 $db = new DBHandler;
 if (isset($_POST["task_name"]) && isset($_POST["task_difficulty"]) && isset($_POST["task_recurrence"])) {
     if ($_POST["task_category"] != "") {
         $categoryID = $db->getIDwithName("TasksCategories", $_POST["task_category"]);
     } else {
         $categoryID = $db->IdGenrerate();
-        $authorID = $db->getIDwithName('Users', 'test');
+        $authorID = $_SESSION['userID'];
         $newCat = new Category($categoryID, $_POST["category-name"], $_POST["category-color"], $authorID);
         $newCat->dbCategoryPush();
     }
     $taskName = $_POST["task_name"];
+    $taskName = str_replace(" ", "_", $taskName);
     $taskDescription = $_POST["task_description"];
     $taskDifficulty = $_POST["task_difficulty"];
     $taskRecurrence = $_POST["task_recurrence"];
-    $newTask = new Task($db->IdGenrerate(), $taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $categoryID, $db->getIDwithName('Users', 'test'));
+    $newTask = new Task($db->IdGenrerate(), $taskName, $taskDescription, $taskDifficulty, $taskRecurrence, $categoryID, $_SESSION["userID"]);
     $newTask->dbTaskPush();
+    header('Location: ../php_template/tasklist.php');
 }
 
 
@@ -44,17 +48,23 @@ class Task
 
     public function dbTaskPush()
     {
+        if ($this->taskRecurrence == "daily") {
+            $span = 0;
+        } else {
+            $span = 6;
+        }
         $data = array(
-            "taskID" => $this->taskID,
+            "ID" => $this->taskID,
             "name" => $this->taskName,
             "description" => $this->taskDescription,
             "difficulty" => $this->taskDifficulty,
             "recurrence" => $this->taskRecurrence,
-            "creationDate" => date("Y-m-d H:i:s", time()),
+            "limitDate" => date("Y-m-d 0:0:0", time() + 86400 * $span),
             "creatorID" => $this->taskAuthorID,
             "categoryID" => $this->taskCategoryID
         );
         $this->db->insert($data, 'Tasks');
+        $this->db->updateBooleanState("Users", "CanCreate", $this->taskAuthorID, 0);
     }
 }
 

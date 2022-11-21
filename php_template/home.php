@@ -6,6 +6,7 @@
  <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
  </head>
  <body>
+ <?php include "header.php" ?>
  <div id="content">
  <!-- tester si l'utilisateur est connecté -->
  <?php
@@ -14,9 +15,8 @@
     	// afficher un message
     	echo "Welcome ".$_SESSION['username'];
         if(!empty($_SESSION['avatar'])){
-            echo '<img src="Avatars/'.$_SESSION['avatar'].'" alt="Image Perso" width="150" height="150">';
+            echo '<img src="../Avatars/'.$_SESSION['avatar'].'" alt="Image Perso" width="150" height="150">';
         }
-
     }
     else{
     	header('Location: loginhtml.php');
@@ -24,7 +24,7 @@
     }
  ?>
  <input type="button" value="profileEditing" onclick="window.location.href='editingProfile.php'">
- <input type="button" value="Logout" onclick="window.location.href='logout.php'">
+ <input type="button" value="Logout" onclick="window.location.href='../function/logout.php'">
  </div>
  </body>
 </html>
