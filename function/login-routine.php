@@ -19,6 +19,7 @@ class Routine extends DBHandler
             if ($task["Recurrence"] == "daily") {
                 if ($this->isDifferentDay($task["LimitDate"])) {
                     $this->updateTaskDate($task["ID"], 0);
+                    $this->updateBooleanState("Tasks", "Complete", $task["ID"], 0);
                 }
             } else if ($task["Recurrence"] == "weekly") {
                 if ($this->isDifferentDay($task["LimitDate"])) {

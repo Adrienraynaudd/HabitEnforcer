@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>test tasks</title>
-    <link href="../style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 <html>
 
 <task-form>
-    <form id="new_tasks" class="register-form" action='../function/tasks.php' method="post">
-        <input type="text" placeholder="task_name" name="task_name" id="task_name">
-        <input type="text" name="task_description" placeholder="task_description" id="task_description">
+    <form id="new_tasks" class="task-form-container" action='../function/tasks.php' method="post">
+        <input type="text" placeholder="Task Name" name="task_name" id="task_name" required="required">
+        <input type="text" name="task_description" placeholder="Task Description" id="task_description">
         <categories>
             <select name="task_category">
                 <!-- mettre les options en automatisé avec les catégories de l'auteur -->
@@ -25,42 +25,42 @@
                 echo $options;
                 ?>
             </select>
-            <input type="button" id="new-cat" value="create new cat">
-            <category-creator id="cat-creator">
+            <input type="button" id="new-category" value="new category">
+            <category-creator id="category-creator" style="display: none">
                 <input type="color" name="category-color">
                 <input type="text" name="category-name" placeholder="category name">
             </category-creator>
         </categories>
-        <select name="task_difficulty">
+        <select name="task_difficulty" required="required">
             <option value="">task difficulty</option>
             <option value="easy">Easy</option>
             <option value="normal">Normal</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
         </select>
-        <select name="task_recurrence">
+        <select name="task_recurrence" required="required">
             <option value="">recurrence</option>
             <option value="daily">Dayly</option>
             <option value="weekly">Weekly</option>
         </select>
-        <button type="submit">submit</button>
+        <input type="submit" value="Create">
     </form>
 </task-form>
 
 </html>
 
 <script>
-    const button = document.getElementById("new-cat");
-    let isClicked = false;
-    button.addEventListener("click", showForm);
+    const buttonNewCategory = document.getElementById("new-category");
+    let isClickedButtonNewCategory = false;
+    buttonNewCategory.addEventListener("click", showForm);
 
     function showForm() {
-        if (!isClicked) {
-            isClicked = true;
-            document.getElementById("cat-creator").style.display = "block";
+        if (!isClickedButtonNewCategory) {
+            isClickedButtonNewCategory = true;
+            document.getElementById("category-creator").style.display = "block";
         } else {
-            isClicked = false;
-            document.getElementById("cat-creator").style.display = "none";
+            isClickedButtonNewCategory = false;
+            document.getElementById("category-creator").style.display = "none";
         }
     }
 </script>
