@@ -25,7 +25,11 @@
                 $dbFunc = new DBHandler;
                 $userCategories = $dbFunc->getEveryThingByParam("TasksCategories", "CreatorID", $_SESSION["userID"]);
                 $userTasks = $dbFunc->getEveryThingByParam("Tasks", "CreatorID", $_SESSION["userID"]);
-                $someTasks = array($userTasks[random_int(0, count($userTasks) - 1)], $userTasks[random_int(0, count($userTasks) - 1)], $userTasks[random_int(0, count($userTasks)) - 1]);
+                if (count($userTasks) > 0) {
+                    $someTasks = array($userTasks[random_int(0, count($userTasks) - 1)], $userTasks[random_int(0, count($userTasks) - 1)], $userTasks[random_int(0, count($userTasks)) - 1]);
+                } else {
+                    $someTasks = $userTasks;
+                }
                 foreach ($someTasks as $task) {
                     foreach ($userCategories as $category) {
                         if ($category["ID"] == $task["CategoryID"]) {

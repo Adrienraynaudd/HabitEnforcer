@@ -119,8 +119,8 @@ class DBHandler
         $sql = "SELECT " . $param . " FROM " . $table . " WHERE CreatorID = '" . $authorID . "' AND name = '" . $toverify . "'";
         if ($request = $con->prepare($sql)) {
             $request->execute();
-            $result = $request->get_result()->fetch_assoc();
-            if (count($result["name"]) > 0) {
+            $result = $request->get_result();
+            if ($result == NULL) {
                 mysqli_close($con);
                 return true;
             }

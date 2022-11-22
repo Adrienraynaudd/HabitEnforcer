@@ -89,9 +89,10 @@ $diffcultyArray = array(
 
 <script src="index.js"></script>
 <script>
-    var countDownDate = new Date('<?php echo $countDownDate ?>');
-    setCountDown('<?php echo $countDownDate ?>', 'createTask');
+    var countDownDate = new Date("<?php echo $countDownDate ?>");
+    setCountDown("<?php echo $countDownDate ?>", "createTask");
     const buttonTask = document.getElementById("show-form");
+    console.log(buttonTask);
     let newTaskClicked = false;
     buttonTask.addEventListener("click", newTaskShow);
 
