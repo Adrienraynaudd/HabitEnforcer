@@ -28,6 +28,10 @@ Class Login
               $_SESSION['username'] = $username;// Set the session username variable
               $_SESSION['email'] = $this->db->getEmailwithName("users",$username);// Set the session email variable
               $_SESSION['avatar'] = $this->db->getAvatarwithName("users",$username);// Set the session avatar variable
+              if (empty($_SESSION['avatar']) && isset($_SESSION['avatar'])) {
+                $_SESSION['avatar'] = "../Avatars/default.png";
+                
+              }
               $routine = new Routine; // Create a new Routine object
               $routine->logRoutine(); // Call the logRoutine function
               header('Location: ../php_template/home.php');

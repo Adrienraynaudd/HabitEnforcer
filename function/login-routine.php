@@ -42,12 +42,12 @@ class Routine extends DBHandler
     {
         $groupScore = 0;
         $userGroup = $this->getFromDbByParam('Users', 'ID', $_SESSION["userID"])['GroupID'];
-        $groupScore = $this->getFromDbByParam('Groups', 'ID', $userGroup)["Score"];
-        if ($groupScore < 0) {
-            $this->deleteByParam("Groups", "ID", $userGroup);
-            die("The group has been delete because it's score was below 0");
-        }
-        if ($userGroup != NULL) {
+        if ($userGroup != null) {
+            $groupScore = $this->getFromDbByParam('Groups', 'ID', $userGroup)["Score"];
+            if ($groupScore < 0) {
+                $this->deleteByParam("Groups", "ID", $userGroup);
+                die("The group has been delete because it's score was below 0");
+            }
             $groupMembers = $this->getEveryThingByParam("Users", "GroupID", $userGroup);
             foreach ($groupMembers as $member) {
                 $memberTasks = $this->getEveryThingByParam("Tasks", "CreatorID", $member["ID"]);
@@ -57,6 +57,7 @@ class Routine extends DBHandler
             }
             $this->updateScore("Groups", $groupScore, $userGroup);
         } else {
+            header("Location: ../php_template/home.php");
             die("You're not in a group yet, join one !");
         }
     }

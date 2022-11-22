@@ -20,7 +20,6 @@
         $dbFunction = new DBHandler;
         $iD_User = $dbFunction->getIDwithName("users", $_SESSION['username']);
         $iDGroup = $dbFunction->getFromDbByParam("users", "ID", $iD_User);
-        echo $iDGroup;
         if ($iDGroup["GroupID"] !== null) {
             $iDCreator = $dbFunction->getFromDbByParam("Groups", "ID", $iDGroup["GroupID"]);
             if ($iD_User === $iDCreator["GroupCreator"]) { // C'est le créateur du Groupe donc ADD et supp disponible

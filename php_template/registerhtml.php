@@ -13,7 +13,6 @@ include "header.php";
 </head>
 
 <body>
-	<?php include "header.php" ?>
 	<div class="login-register-container">
 		<section>
 			<form action="../function/register.php" method="post" autocomplete="off" class="login-register-form">

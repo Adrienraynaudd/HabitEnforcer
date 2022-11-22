@@ -8,7 +8,8 @@
 </head>
 
 <body>
-    <?php include "header.php" ?>
+    <?php 
+    include "header.php" ?>
     <section class="login-register-container">
 
         <form action="../function/login.php" method="POST" id="login-form" class="login-register-form">
