@@ -87,7 +87,7 @@ task-filters {
   width: 60%;
 }
 
-task-filters input[type="text"] {
+task-filters input[type="text"]{
   width: 100%;
   border-top: none;
   border-right: none;
@@ -404,4 +404,13 @@ right-container form {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+task-filters input[type="text"]:focus {
+  width: 100%;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  background: none;
+  border-color: #432874;
+  color: black;
 }

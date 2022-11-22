@@ -40,15 +40,17 @@ class Routine extends DBHandler
 
     public function refreshGroupScore()
     {
-        $groupScore = 0;
         $userGroup = $this->getFromDbByParam('Users', 'ID', $_SESSION["userID"])['GroupID'];
-        if ($userGroup != null) {
+        if ($userGroup != NULL) {
+            $groupMembers = $this->getEveryThingByParam("Users", "GroupID", $userGroup);
             $groupScore = $this->getFromDbByParam('Groups', 'ID', $userGroup)["Score"];
             if ($groupScore < 0) {
+                foreach ($groupMembers as $member) {
+                    $this->deleteByParam("Tasks", "CreatorID", $member["ID"]);
+                }
                 $this->deleteByParam("Groups", "ID", $userGroup);
                 die("The group has been delete because it's score was below 0");
             }
-            $groupMembers = $this->getEveryThingByParam("Users", "GroupID", $userGroup);
             foreach ($groupMembers as $member) {
                 $memberTasks = $this->getEveryThingByParam("Tasks", "CreatorID", $member["ID"]);
                 $playerScore = $this->setPlayerScore($memberTasks);

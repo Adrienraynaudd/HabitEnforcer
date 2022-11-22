@@ -27,8 +27,12 @@
                 echo ("MEMBRES :<br>");
                 echo ("<form action='../function/deleteGroup.php' method='POST'>");
                 foreach ($groupMember as $member) {
-                    echo ("<div><p>" . $member["Name"] . "</p></div>");
-                    echo ("<button class='button' id='delete' name='delete' type='submit' value='" . $member["Name"] . "'>🗑️</button>");
+                    if ($member["Score"] >= 0) {
+                        $score = "<p style=\"color: green\">+" . $member["Score"] . "</p>";
+                    } else {
+                        "<p style=\"color: red\">-" . $member["Score"] . "</p>";
+                    }
+                    echo ("<div>" . $score . "<p>" . $member["Name"] . "</p></div>");
                 }
                 echo ("</form>");
                 echo ("
