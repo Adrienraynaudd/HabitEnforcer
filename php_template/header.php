@@ -29,7 +29,7 @@
              <a href=\"../function/logout.php\">
              <img src=\"https://cdn-icons-png.flaticon.com/512/992/992680.png\">
              </a>
-             <a href=\"../php_template/home.php\">
+             <a href=\"../php_template/editingProfile.php\">
              <img src=\"$image\">
              </a>
              </user>";

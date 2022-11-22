@@ -33,6 +33,7 @@
                         "<p style=\"color: red\">-" . $member["Score"] . "</p>";
                     }
                     echo ("<div>" . $score . "<p>" . $member["Name"] . "</p></div>");
+                    echo ("<button class='button' id='delete' name='delete' type='submit' value='" . $member["Name"] . "'>🗑️</button>");
                 }
                 echo ("</form>");
                 echo ("
@@ -64,6 +65,7 @@
                 }
                 echo ("</form>");
             }
+            echo "<p>Group Score : " . $iDCreator["Score"] . "</p>";
         } else {
             echo ("
         <form action='../function/createGroup.php' method='POST'>

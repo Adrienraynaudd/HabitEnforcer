@@ -6,8 +6,6 @@
 </head>
 
 <html>
-<input type="button" value="profileEditing" onclick="window.location.href='editingProfile.php'"><br /><br />
- <input type="button" value="Logout" onclick="window.location.href='../function/logout.php'">
 <home-container>
     <left-container>
         <header-left-container>
@@ -27,7 +25,7 @@
                 $dbFunc = new DBHandler;
                 $userCategories = $dbFunc->getEveryThingByParam("TasksCategories", "CreatorID", $_SESSION["userID"]);
                 $userTasks = $dbFunc->getEveryThingByParam("Tasks", "CreatorID", $_SESSION["userID"]);
-                if (count($userTasks)>3){
+                if (count($userTasks)>=3){
                     $someTasks = array($userTasks[random_int(0, count($userTasks) - 1)], $userTasks[random_int(0, count($userTasks) - 1)], $userTasks[random_int(0, count($userTasks)) - 1]);
                 }else{
                     $someTasks= $userTasks;
